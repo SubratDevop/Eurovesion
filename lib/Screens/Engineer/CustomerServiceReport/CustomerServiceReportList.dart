@@ -112,22 +112,18 @@ class _CustomerServiceReportListScreenState
         backgroundColor: themWhiteColor,
         appBar: AppBar(
           backwardsCompatibility: false,
-          // systemOverlayStyle: const SystemUiOverlayStyle(
-          //     statusBarColor: themBlueColor,
-          //     statusBarBrightness: Brightness.light,
-          //     statusBarIconBrightness: Brightness.light),
 
           backgroundColor: themBlueColor,
           centerTitle: true,
           toolbarHeight: height * 0.1,
           elevation: 0.0,
-          title:const Text(
+          title: const Text(
             "CSR List",
             style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'TimesNewRoman',
-                  fontWeight: FontWeight.w800,
-                  fontSize: 30),
+                color: Colors.white,
+                fontFamily: 'TimesNewRoman',
+                fontWeight: FontWeight.w800,
+                fontSize: 30),
           ),
           leading: IconButton(
             icon: const Icon(

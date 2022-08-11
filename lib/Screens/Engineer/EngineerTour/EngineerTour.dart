@@ -77,25 +77,25 @@ class _EngineerTourScreenState extends State<EngineerTourScreen> {
     return Scaffold(
       appBar: AppBar(
         backwardsCompatibility: false,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light),
 
-        backgroundColor: Colors.transparent,
+        backgroundColor: themBlueColor,
+        centerTitle: true,
         toolbarHeight: height * 0.1,
         elevation: 0.0,
-        // title: Align(
-        //   alignment: Alignment.topLeft,
-        //   child: FittedBox(
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(left: 10,top: 0),
-        //       child: Text("CSR List",style: TextStyle(fontFamily: 'Montserrat',fontSize: 20,fontWeight: FontWeight.w700,color: themWhiteColor),),
-        //     ),
-        //   ),
-        // ),
+       title: const Text(
+            "Tour",
+            style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'TimesNewRoman',
+                fontWeight: FontWeight.w800,
+                fontSize: 30),
+          ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.keyboard_arrow_left,
             color: Colors.white,
             size: 40,
@@ -106,42 +106,44 @@ class _EngineerTourScreenState extends State<EngineerTourScreen> {
                 .push(MaterialPageRoute(builder: (context) => EngineerHome()));
           },
         ),
-        flexibleSpace: ClipPath(
-          clipper: Customshape(),
-          child: Container(
-            //height: height*0.2,
-            width: MediaQuery.of(context).size.width,
-            color: themBlueColor,
-            child: const Center(
-              child: FittedBox(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    "Tour",
-                    style: TextStyle(
-                        fontFamily: 'AkayaKanadaka',
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: themWhiteColor),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        // flexibleSpace: ClipPath(
+        //   clipper: Customshape(),
+        //   child: Container(
+        //     //height: height*0.2,
+        //     width: MediaQuery.of(context).size.width,
+        //     color: themBlueColor,
+        //     child: const Center(
+        //       child: FittedBox(
+        //         child: Padding(
+        //           padding: EdgeInsets.only(left: 10),
+        //           child: Text(
+        //             "Tour",
+        //             style: TextStyle(
+        //                 fontFamily: 'AkayaKanadaka',
+        //                 fontSize: 30,
+        //                 fontWeight: FontWeight.w700,
+        //                 color: themWhiteColor),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+     
       ),
 
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: themBlueColor,
-        child: Icon(
-          Icons.arrow_left,
-          size: 40,
-        ),
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true)
-              .push(MaterialPageRoute(builder: (context) => EngineerHome()));
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: themBlueColor,
+      //   child: Icon(
+      //     Icons.arrow_left,
+      //     size: 40,
+      //   ),
+      //   onPressed: () {
+      //     Navigator.of(context, rootNavigator: true)
+      //         .push(MaterialPageRoute(builder: (context) => EngineerHome()));
+      //   },
+      // ),
+      
       // appBar: AppBar(
       //   backwardsCompatibility: true,
       //   systemOverlayStyle: SystemUiOverlayStyle(
