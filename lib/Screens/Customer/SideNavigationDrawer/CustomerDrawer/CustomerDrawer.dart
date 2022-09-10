@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:ev_testing_app/Screens/Customer/CustomeItems/AddItem.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomeItems/CustomerItems.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomerCreateComplain/CustomerCreateComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Customer/Profile/CustomerProfile.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Screens/Customer/CustomeItems/AddItem.dart';
+import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
+import 'package:eurovision/Screens/Customer/CustomerCreateComplain/CustomerCreateComplain.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Customer/Profile/CustomerProfile.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -158,9 +158,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 engPrefs.clear();
                 SharedPreferences userPrefs =
                     await SharedPreferences.getInstance();
-                userPrefs.clear();
-                Navigator.of(context, rootNavigator: true).push(
-                    MaterialPageRoute(builder: (context) => CustomerLogin()));
+                userPrefs .clear();
+                Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>CustomerLogin()));
+                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CustomerLogin(),),);
+    //             Navigator.pushAndRemoveUntil(
+    //   context, 
+    //   // ModalRoute.withName("CustomerLogin"), 
+    //  MaterialPageRoute(builder: (BuildContext context) =>  CustomerLogin()), 
+    // ModalRoute.withName('/'),
+    // );
               },
             ),
             ListTile(
@@ -190,7 +196,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
     // });
 
-    setState(() {});
     customerPrefs = await SharedPreferences.getInstance();
     CustomerDrawer.name = customerPrefs.getString("name");
   }

@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/Model/EngineerModel/EngineerProfileEdit.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/Profile/EngineerProfileEdit.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/Model/EngineerModel/EngineerProfileEdit.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/Profile/EngineerProfileEdit.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -172,24 +172,25 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
         backgroundColor: themBlueColor,
         appBar: AppBar(
           backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
+          systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.light),
           backgroundColor: themBlueColor,
           elevation: 0.0,
-          title: const Center(
+          title: Center(
             child: Text(
               'Profile',
-              style:  TextStyle(
+              style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'TimesNewRoman',
                   fontWeight: FontWeight.w800,
                   fontSize: 30),
             ),
           ),
+         
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.keyboard_arrow_left,
               color: Colors.white,
               size: 40,
@@ -201,6 +202,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
             },
           ),
         ),
+        
         endDrawer: Container(
             width: MediaQuery.of(context).size.width * 0.7,
             child: EngineerDrawer()),
@@ -222,7 +224,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                         padding: const EdgeInsets.only(
                             top: 20, bottom: 20, left: 10),
                         child: EngineerProfile.profileImage == null
-                            ? const CircleAvatar(
+                            ? CircleAvatar(
                                 radius: 105,
                                 backgroundColor: Colors.white,
                                 child: CircleAvatar(
@@ -259,11 +261,11 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                                         onPressed: () {
                                           _openCamera();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.camera_alt,
                                           color: Colors.white,
                                         )),
-                                    const Text("Camera",
+                                    Text("Camera",
                                         style: TextStyle(
                                             fontFamily: 'Righteous',
                                             fontSize: 15,
@@ -280,11 +282,11 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                                           // chooseImage(ImageSource.gallery);
                                           _openGallery();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.image,
                                           color: Colors.white,
                                         )),
-                                    const Text("Gallery",
+                                    Text("Gallery",
                                         style: TextStyle(
                                             fontFamily: 'Righteous',
                                             fontSize: 15,
@@ -309,12 +311,12 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                                                   builder: (context) =>
                                                       EngineerProfileEdit()));
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.edit,
                                           color: Colors.white,
                                         )),
-                                    const Text("Edit",
-                                        style: const TextStyle(
+                                    Text("Edit",
+                                        style: TextStyle(
                                             fontFamily: 'Righteous',
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -341,7 +343,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                         children: [
                           FittedBox(
                               child: Text(EngineerProfile.name.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontFamily: 'TimesNewRoman',
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
@@ -349,7 +351,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                           FittedBox(
                               child: Text(
                                   EngineerProfile.employeeType.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontFamily: 'TimesNEwRoman',
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
@@ -363,8 +365,8 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                 Container(
                   width: width,
                   height: height * 0.4,
-                  decoration: const BoxDecoration(
-                    borderRadius:  BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     color: themWhiteColor,
@@ -395,7 +397,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                             children: [
                               Container(
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.phone,
                                       color: themWhiteColor,
@@ -412,7 +414,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
 
                               FittedBox(
                                   child: Text("${EngineerProfile.contactNo}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'Righteous',
                                           fontSize: 15,
                                           fontWeight: FontWeight.w700,
@@ -426,7 +428,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                             children: [
                               Container(
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.mail,
                                       color: themWhiteColor,
@@ -443,7 +445,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
 
                               FittedBox(
                                   child: Text("${EngineerProfile.email}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'Righteous',
                                           fontSize: 15,
                                           fontWeight: FontWeight.w700,
@@ -459,12 +461,12 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
                               Container(
                                 child: Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.location_city,
                                       color: themWhiteColor,
                                     ),
-                                    const Text("Address:",
-                                        style: const TextStyle(
+                                    Text("Address:",
+                                        style: TextStyle(
                                             fontFamily: 'Righteous',
                                             fontSize: 18,
                                             fontWeight: FontWeight.w900,
@@ -475,7 +477,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
 
                               FittedBox(
                                   child: Text("${EngineerProfile.address}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'Righteous',
                                           fontSize: 15,
                                           fontWeight: FontWeight.w700,

@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Screens/Engineer/CustomerServiceReport/CustomerServiceReportPdfView.dart';
-import 'package:ev_testing_app/Screens/Engineer/CustomerServiceReport/EditCustomerServiceReport.dart';
-import 'package:ev_testing_app/Screens/Engineer/EngineerTour/EngineerTour.dart';
-import 'package:ev_testing_app/Screens/Engineer/EngineerTour/EngineerTourEdit.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Screens/Engineer/CustomerServiceReport/CustomerServiceReportPdfView.dart';
+import 'package:eurovision/Screens/Engineer/CustomerServiceReport/EditCustomerServiceReport.dart';
+import 'package:eurovision/Screens/Engineer/EngineerTour/EngineerTour.dart';
+import 'package:eurovision/Screens/Engineer/EngineerTour/EngineerTourEdit.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -30,9 +30,9 @@ class EngineerTourList extends StatelessWidget {
 
     /// screen Orientation end///////////
 
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const EngineerTourListScreen(),
+      home: EngineerTourListScreen(),
     );
   }
 }
@@ -103,25 +103,25 @@ class _CustomerServiceReportListScreenState
         backgroundColor: themWhiteColor,
         appBar: AppBar(
           backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
+          systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.light),
 
-          backgroundColor: themBlueColor,
-          centerTitle: true,
+          backgroundColor: Colors.transparent,
           toolbarHeight: height * 0.1,
           elevation: 0.0,
-           title: const Text(
-            "Tour List",
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'TimesNewRoman',
-                fontWeight: FontWeight.w800,
-                fontSize: 30),
-          ),
+          // title: Align(
+          //   alignment: Alignment.topLeft,
+          //   child: FittedBox(
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(left: 10,top: 0),
+          //       child: Text("CSR List",style: TextStyle(fontFamily: 'Montserrat',fontSize: 20,fontWeight: FontWeight.w700,color: themWhiteColor),),
+          //     ),
+          //   ),
+          // ),
           leading: IconButton(
-            icon:const Icon(
+            icon: Icon(
               Icons.keyboard_arrow_left,
               color: Colors.white,
               size: 40,
@@ -132,39 +132,38 @@ class _CustomerServiceReportListScreenState
                   MaterialPageRoute(builder: (context) => EngineerHome()));
             },
           ),
-          // flexibleSpace: ClipPath(
-          //   clipper: Customshape(),
-          //   child: Container(
-          //     //height: height*0.2,
-          //     width: MediaQuery.of(context).size.width,
-          //     color: themBlueColor,
-          //     child: Center(
-          //       child: FittedBox(
-          //         child: Padding(
-          //           padding: const EdgeInsets.only(left: 10),
-          //           child: Text(
-          //             "Tour List",
-          //             style: TextStyle(
-          //                 fontFamily: 'AkayaKanadaka',
-          //                 fontSize: 30,
-          //                 fontWeight: FontWeight.w700,
-          //                 color: themWhiteColor),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        
+          flexibleSpace: ClipPath(
+            clipper: Customshape(),
+            child: Container(
+              //height: height*0.2,
+              width: MediaQuery.of(context).size.width,
+              color: themBlueColor,
+              child: Center(
+                child: FittedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Tour List",
+                      style: TextStyle(
+                          fontFamily: 'AkayaKanadaka',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                          color: themWhiteColor),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
         endDrawer: Container(
             width: MediaQuery.of(context).size.width * 0.7,
             child: EngineerDrawer()),
         body: showTourCsrList.length == 0
-            ? const Center(
+            ? Center(
                 child: Text(
                   "No Tour Available... ",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontFamily: 'AkayaKanadaka',
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
@@ -183,8 +182,8 @@ class _CustomerServiceReportListScreenState
               height: height * 0.05,
               alignment: Alignment.topRight,
               child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                const Text("Create a new tour",
-                    style: const TextStyle(
+                Text("Create a new tour",
+                    style: TextStyle(
                         fontFamily: 'Righteous',
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
@@ -192,7 +191,7 @@ class _CustomerServiceReportListScreenState
                 RawMaterialButton(
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true).push(
-                        MaterialPageRoute(builder: (context) => const EngineerTour()));
+                        MaterialPageRoute(builder: (context) => EngineerTour()));
                   },
                   child: Center(
                     child: new Icon(
@@ -271,7 +270,7 @@ class _CustomerServiceReportListScreenState
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(
+                                                  SizedBox(
                                                     height: 5,
                                                   ),
                                                   Row(
@@ -279,7 +278,7 @@ class _CustomerServiceReportListScreenState
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const Text(
+                                                      Text(
                                                         "Departure date",
                                                         style: TextStyle(
                                                             fontFamily: 'WorkSans',
@@ -296,7 +295,7 @@ class _CustomerServiceReportListScreenState
                                                         showTourCsrList[index]
                                                                 ['depdate']
                                                             .toString(),
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontFamily: 'WorkSans',
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -305,7 +304,7 @@ class _CustomerServiceReportListScreenState
                                                       )
                                                     ],
                                                   ),
-                                                  const SizedBox(
+                                                  SizedBox(
                                                     height: 3,
                                                   ),
                                                   Row(
@@ -313,7 +312,7 @@ class _CustomerServiceReportListScreenState
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const Text(
+                                                      Text(
                                                         "Departure Time",
                                                         style: TextStyle(
                                                             fontFamily: 'WorkSans',
@@ -330,7 +329,7 @@ class _CustomerServiceReportListScreenState
                                                         showTourCsrList[index]
                                                                 ['deptime']
                                                             .toString(),
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontFamily: 'WorkSans',
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -339,7 +338,7 @@ class _CustomerServiceReportListScreenState
                                                       )
                                                     ],
                                                   ),
-                                                  const SizedBox(
+                                                  SizedBox(
                                                     height: 3,
                                                   ),
                                                   Row(
@@ -347,7 +346,7 @@ class _CustomerServiceReportListScreenState
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const Text(
+                                                      Text(
                                                         "Grand Total",
                                                         style: TextStyle(
                                                             fontFamily: 'WorkSans',
@@ -362,7 +361,7 @@ class _CustomerServiceReportListScreenState
                                                       // Icon(Icons.lock_clock),
                                                       Text(
                                                         "₹ ${showTourCsrList[index]['grandtotal'].toString()}",
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontFamily: 'WorkSans',
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -371,7 +370,7 @@ class _CustomerServiceReportListScreenState
                                                       )
                                                     ],
                                                   ),
-                                                  const SizedBox(
+                                                  SizedBox(
                                                     height: 3, //2
                                                   ),
                                                   Row(
@@ -379,7 +378,7 @@ class _CustomerServiceReportListScreenState
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      const Text(
+                                                      Text(
                                                         "Teritory",
                                                         style: TextStyle(
                                                             fontFamily: 'WorkSans',
@@ -396,7 +395,7 @@ class _CustomerServiceReportListScreenState
                                                         showTourCsrList[index]
                                                                 ['teritory']
                                                             .toString(),
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontFamily: 'WorkSans',
                                                             fontWeight:
                                                                 FontWeight.w700,
@@ -421,9 +420,9 @@ class _CustomerServiceReportListScreenState
                                                                         true)
                                                                 .push(MaterialPageRoute(
                                                                     builder: (context) =>
-                                                                        const EngineerTourLIstPdfView()));
+                                                                        EngineerTourLIstPdfView()));
                                                            },
-                                                           icon: const Icon(
+                                                           icon: Icon(
                                                             Icons.book,
                                                             color: themBlueColor,
                                                            )
@@ -433,7 +432,7 @@ class _CustomerServiceReportListScreenState
                                                           onPressed: () {
                                                             _launchURL();
                                                           },
-                                                          icon: const Icon(
+                                                          icon: Icon(
                                                             Icons.download,
                                                             color: themBlueColor,
                                                           )),
@@ -465,13 +464,13 @@ class _CustomerServiceReportListScreenState
                                                               //  EngineerTourList.complaintnumber=showTourCsrList[index]['complaintnumber'].toString();
                                                               //  EngineerTourList.producttypename=showTourCsrList[index]['producttype'].toString();
                                                             });
-                                                            Navigator.of(context,
-                                                                    rootNavigator: true)
-                                                                .push(MaterialPageRoute(
-                                                                    builder: (context) =>
-                                                                        const EngineerTourEdit()));
+                                                            // Navigator.of(context,
+                                                            //         rootNavigator: true)
+                                                            //     .push(MaterialPageRoute(
+                                                            //         builder: (context) =>
+                                                            //             EngineerTourEdit()));
                                                           },
-                                                          icon: const Icon(
+                                                          icon: Icon(
                                                             Icons.edit,
                                                             color: themBlueColor,
                                                           ))

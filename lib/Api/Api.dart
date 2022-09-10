@@ -24,6 +24,7 @@ String customerGetComplainTypeApi = "http://"+ipaddress+"/eurovision/Api/complai
 String customerGetItemforComplainTypeApi = "http://"+ipaddress+"/eurovision/Api/item_type_for_complain";
 String customerMachineRegistrationApi = "http://"+ipaddress+"/eurovision/Api/customer_machine_registration";
 String customerTotelItemListApi = "http://"+ipaddress+"/eurovision/Api/customer_machine_list/";
+String customerAddItemTypeApi = "http://"+ipaddress+"/eurovision/Api/customer_machine_list_createItem/";
 
 
 // CustomerTotalItemList

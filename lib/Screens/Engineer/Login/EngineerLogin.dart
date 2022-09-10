@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/EngineerModel/EngineerLogin.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Engineer/ForgotPassword/EngineerVerify.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/NoExistingUser%20copy/NoExistingEngineer.dart';
-import 'package:ev_testing_app/Screens/Engineer/NoInternent/NoInternetEngineerLogin.dart';
-import 'package:ev_testing_app/bloc/EnginerLogin_bloc.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/EngineerModel/EngineerLogin.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Engineer/ForgotPassword/EngineerVerify.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/NoExistingUser%20copy/NoExistingEngineer.dart';
+import 'package:eurovision/Screens/Engineer/NoInternent/NoInternetEngineerLogin.dart';
+import 'package:eurovision/Screens/WelCome/WelCome.dart';
+import 'package:eurovision/bloc/EnginerLogin_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert' as convert;
@@ -41,11 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
-  final styleWelcome = const TextStyle(
+  final styleWelcome = TextStyle(
       fontSize: 30, fontWeight: FontWeight.w700, color: themWhiteColor);
-  final styleLogin = const TextStyle(
+  final styleLogin = TextStyle(
       fontSize: 50, fontWeight: FontWeight.w700, color: themWhiteColor);
-  final styleForgotPassword = const TextStyle(
+  final styleForgotPassword = TextStyle(
       fontSize: 100, fontWeight: FontWeight.w600, color: themWhiteColor);
 
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   //// checking internet connectivity end
 
-  ////////////Engineer Login Start///////////
+  //!Engineer Login Start
   Future<EngineerLoginModel> enginnerLoginProcess() async {
     print(
         "email  " + AesEncryption.encryptAES(_emailController.text.toString()));
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: themeToastColor,
+          backgroundColor: themBlueColor,
           textColor: Colors.white,
           fontSize: 16.0);
 
@@ -125,13 +127,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   ////////////Engineer Login End///////////
 
+//! BackButtonInterceptor
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    // Sorry can not back here
+
+    // // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> WelComeScreen()));
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=> WelComeScreen()));
+    // print("BACK BUTTON!"); // Do some stuff.
+
+    // exit(0);
+    return true;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // BackButtonInterceptor.add(myInterceptor);
     _checkInternetConnection();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
@@ -153,18 +177,18 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light),
         backgroundColor: Colors.transparent,
         toolbarHeight: height * 0.2,
         elevation: 0.0,
-        title: const Align(
+        title: Align(
           alignment: Alignment.topLeft,
           child: FittedBox(
             child: Padding(
-              padding: EdgeInsets.only(left: 10, top: 80),
+              padding: const EdgeInsets.only(left: 10, top: 80),
               child: Text(
                 "Login",
                 style: TextStyle(
@@ -182,10 +206,10 @@ class _HomeScreenState extends State<HomeScreen> {
             //height: height*0.2,
             width: MediaQuery.of(context).size.width,
             color: themBlueColor,
-            child: const Center(
+            child: Center(
               child: FittedBox(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     "Eurovesion",
                     style: TextStyle(
@@ -205,11 +229,12 @@ class _HomeScreenState extends State<HomeScreen> {
           overscroll.disallowGlow();
           return false;
         },
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formkey,
-            // autovalidate: _autovalidate,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Form(
+          key: _formkey,
+          // autovalidate: _autovalidate,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: SingleChildScrollView(
+            reverse: true,
             child: Column(
               children: [
                 Container(
@@ -217,13 +242,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: height * 0.7,
                   child: Column(
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         height: 50,
                       ),
 
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: const Align(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
                               "Email/Phone No",
@@ -234,23 +259,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ),
 
-                      const SizedBox(
+                      SizedBox(
                         height: 10,
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, bottom: 30),
+                        padding:
+                            EdgeInsets.only(left: 10, right: 10, bottom: 30),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: const Color(0xffEFF3F6),
+                              color: Color(0xffEFF3F6),
                               borderRadius: BorderRadius.circular(0),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 7,
-                                  offset: const Offset(
+                                  offset: Offset(
                                       0, 3), // changes position of shadow
                                 ),
 
@@ -276,8 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   keyboardType: TextInputType.emailAddress,
                                   controller: _emailController,
                                   decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 20),
                                       hintText: "Enter email/phone no.",
                                       labelText: "email/phone",
                                       errorText: snapshot.error?.toString(),
@@ -294,8 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -307,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ),
 
-                      const SizedBox(
+                      SizedBox(
                         height: 10,
                       ),
 
@@ -316,14 +340,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 10, right: 10, bottom: 20),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: const Color(0xffEFF3F6),
+                              color: Color(0xffEFF3F6),
                               borderRadius: BorderRadius.circular(0),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 7,
-                                  offset: const Offset(
+                                  offset: Offset(
                                       0, 3), // changes position of shadow
                                 ),
                                 // BoxShadow(
@@ -349,8 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   keyboardType: TextInputType.text,
                                   controller: _passwordController,
                                   decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 20),
                                       hintText: "Enter user password",
                                       labelText: "password",
                                       errorText: snapshot.error?.toString(),
@@ -389,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: _buildForgotPassword()),
                       ),
 
-                      const SizedBox(
+                      SizedBox(
                         height: 50,
                       ),
 
@@ -477,13 +500,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         engPrefs.setString(
                             "branchaddress", response.branchaddress.toString());
                         engPrefs.setString(
-                            "Engineer id = "
-                            "engineerimage",
-                            response.engineerimage.toString());
+                            "engineerimage", response.engineerimage.toString());
 
                         print(" id eng ///////// " +
                             engPrefs.getString("engineerId").toString());
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:q36fNMaoOV8Eoz0RJsUtQg==:AAAAAAAAAAAAAAAAAAAAAA==
+
+                        Fluttertoast.showToast(
+                            // msg: response.message,
+                            msg: "Login successful!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: themBlueColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                         Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
                                 builder: (context) => EngineerHome()));
@@ -495,25 +526,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
-                            backgroundColor: themeToastColor,
+                            backgroundColor: themBlueColor,
                             textColor: Colors.white,
                             fontSize: 16.0);
-
                         // Navigator.of(context, rootNavigator: true).push(
                         //     MaterialPageRoute(
                         //         builder: (context) =>
                         //             NoExistingUserEngineer()));
                       }
-                    } catch (e) {
-                      Fluttertoast.showToast(
-                          msg: e.toString(),
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: themeToastColor,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                    }
+                    } catch (e) {}
 
                     // Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>Home()));
                   },
@@ -527,9 +548,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? Colors.grey
                     : themBlueColor,
               ),
-              child: const Text(
+              child: Text(
                 "Login",
-                style: const TextStyle(
+                style: TextStyle(
                     fontFamily: 'TimesNewRoman',
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
@@ -547,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .push(MaterialPageRoute(builder: (context) => EngineerVerify()));
       },
       child: Container(
-          child: const Text(
+          child: Text(
         "Forgot Password !",
         style: TextStyle(
             fontFamily: 'AkayaKanadaka',
@@ -560,30 +581,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildEngineer() {
     return Container(
-        child: Row(
-      children: [
-        const Text(
-          "Are You Customer ?  ",
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
-        ),
-        const SizedBox(
-          width: 2,
-        ),
-        InkWell(
-            onTap: () {
-              Navigator.of(context, rootNavigator: true).push(
-                  MaterialPageRoute(builder: (context) => CustomerLogin()));
-            },
-            child: const Text(
-              "Please Go Back here. !!",
-              style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: themBlueColor),
-            ))
-      ],
-    ));
+      child: Row(
+        children: [
+          Text(
+            "Are You Customer ?  ",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54),
+          ),
+          SizedBox(
+            width: 2,
+          ),
+          FittedBox(
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(builder: (context) => CustomerLogin()));
+              },
+              child: Text(
+                "Please Go Back here. !!",
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: themBlueColor),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

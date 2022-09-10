@@ -1,11 +1,14 @@
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/Login/EngineerLogin.dart';
-import 'package:ev_testing_app/Screens/WelCome/Webview.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'dart:io';
+
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/Login/EngineerLogin.dart';
+import 'package:eurovision/Screens/WelCome/Webview.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,17 +73,35 @@ class _WelComeScreenState extends State<WelComeScreen> {
     if (user == null) {
       Navigator.of(context, rootNavigator: true)
           .push(MaterialPageRoute(builder: (context) => CustomerLogin()));
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => CustomerLogin(),
+      //   ),
+      // );
     }
     if (user == "customer") {
       // navigateCustomer();
-      Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (context) => CustomerHome()));
+      // Navigator.of(context, rootNavigator: true)
+      //     .push(MaterialPageRoute(builder: (context) => CustomerHome()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomerHome(),
+        ),
+      );
     }
 
     if (user == "eng") {
-      //navigateEngineer();
-      Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (context) => CustomerLogin()));
+      navigateEngineer();
+      // Navigator.of(context, rootNavigator: false)
+      //     .push(MaterialPageRoute(builder: (context) => CustomerLogin()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomerLogin(),
+        ),
+      );
     }
   }
 
@@ -89,25 +110,39 @@ class _WelComeScreenState extends State<WelComeScreen> {
     var user = userPrefs.getString("user");
 
     if (user == null) {
-      Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (context) => EngineerLogin()));
+      // Navigator.of(context, rootNavigator: true)
+      // .push(MaterialPageRoute(builder: (context) => EngineerLogin(),),);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EngineerLogin(),
+        ),
+      );
     }
     if (user == "customer") {
-      //navigateCustomer();
-      Navigator.of(context, rootNavigator: true)
-          .push(MaterialPageRoute(builder: (context) => EngineerLogin()));
+      navigateCustomer();
+      // Navigator.of(context, rootNavigator: true)
+      //     .push(MaterialPageRoute(builder: (context) => EngineerLogin()));
     }
 
     if (user == "eng") {
-      //navigateEngineer();
+      // navigateEngineer();
       Navigator.of(context, rootNavigator: true)
           .push(MaterialPageRoute(builder: (context) => EngineerHome()));
     }
   }
 
+  // ! BackButtonInterceptor
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    exit(0);
+
+    // return true;
+  }
+
   @override
   void initState() {
     super.initState();
+    // BackButtonInterceptor.add(myInterceptor);
 
     fethAppImageVideos();
   }
@@ -119,7 +154,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
     //   DeviceOrientation.portraitDown,
     // ]);
 
-//     // Set landscape orientation
+//! Set landscape orientation
 // SystemChrome.setPreferredOrientations([
 //   DeviceOrientation.landscapeLeft,
 //   DeviceOrientation.landscapeRight,
@@ -142,6 +177,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
     return Scaffold(
       backgroundColor: themWhiteColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
@@ -285,7 +321,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                                     "${appImageVideo["secondimage"]}",
                                                     fit: BoxFit.cover,
                                                   )
-                                                :const Center(
+                                                : Center(
                                                     child:
                                                         CircularProgressIndicator(
                                                       color: themBlueColor,
@@ -308,10 +344,10 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                             child: appImageVideo[
                                                         'secondtext'] ==
                                                     null
-                                                ?const Text("")
+                                                ? Text("")
                                                 : Text(
                                                     appImageVideo['secondtext'],
-                                                    style:const TextStyle(
+                                                    style: TextStyle(
                                                         fontFamily:
                                                             'AkayaKanadaka',
                                                         fontSize: 20,
@@ -327,7 +363,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                 ),
                               ),
 
-                             const SizedBox(
+                              SizedBox(
                                 height: 15,
                               ),
 
@@ -354,7 +390,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                         },
                                       ),
                                     ))
-                                  :const Center(
+                                  : Center(
                                       child: CircularProgressIndicator(
                                         color: themBlueColor,
                                       ),
@@ -404,50 +440,56 @@ class _WelComeScreenState extends State<WelComeScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: height * 0.05,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 2.5),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: themBlueColor,
-                                      // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                      textStyle:const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold)),
-                                  onPressed: () {
-                                    navigateCustomer();
-                                  },
-                                  child:const Text("Customer")),
+                  Container(
+                    width: width,
+                    height: height * 0.05,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Container(
+                        color: themWhiteColor,
+                        width: width,
+                        height: height * 0.05,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: SizedBox(
+                                width: width * 0.49,
+                                height: 50,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: themBlueColor,
+                                        // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      navigateCustomer();
+                                    },
+                                    child: Text("Customer")),
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 2.5),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: themBlueColor,
-                                      // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                      textStyle:const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold)),
-                                  onPressed: () {
-                                    navigateEngineer();
-                                  },
-                                  child:const Text("Engineer")),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 2),
+                              child: SizedBox(
+                                // height: 50,
+                                width: width * 0.49,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: themBlueColor,
+                                        // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                    onPressed: () {
+                                      navigateEngineer();
+                                    },
+                                    child: Text("Engineer")),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -463,12 +505,12 @@ class _WelComeScreenState extends State<WelComeScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>const WebviewPage(),
+                  builder: (context) => WebviewPage(),
                 ));
           },
           child: Container(
-              padding:const EdgeInsets.only(left: 1, bottom: 2),
-              child:const Text(
+              padding: EdgeInsets.only(left: 1, bottom: 2),
+              child: Text(
                 "Buy\nNow",
                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
               )),

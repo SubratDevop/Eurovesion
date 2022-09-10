@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

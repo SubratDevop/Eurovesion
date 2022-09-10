@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:ev_testing_app/Screens/Customer/CustomerComplainPage/CustomerTotalComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Screens/Customer/CustomerComplainPage/CustomerTotalComplain.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

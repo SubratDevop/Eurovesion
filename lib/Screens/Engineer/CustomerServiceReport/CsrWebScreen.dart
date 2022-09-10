@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';

@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/WelCome/WelCome.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/WelCome/WelCome.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ev_testing_app/Screens/SplashScreen/NoInternetSplashScreen.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Screens/SplashScreen/NoInternetSplashScreen.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
-import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
   
@@ -60,7 +58,7 @@ class _SplashScreenHomeState extends State<SplashScreenHome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BackButtonInterceptor.add(myInterceptor);
+  BackButtonInterceptor.add(myInterceptor);
     _checkInternetConnection();
     startTimer();
   }
@@ -70,14 +68,14 @@ class _SplashScreenHomeState extends State<SplashScreenHome> {
     // TODO: implement dispose
     super.dispose();
   }
-
+// ! BackButtonInterceptor
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     Fluttertoast.showToast(
       msg: 'Sorry can not back here',
-      toastLength: Toast.LENGTH_SHORT,
+      //toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red
+      backgroundColor: themBlueColor
     );
     //print("BACK BUTTON!"); // Do some stuff.
     return true;
@@ -85,7 +83,8 @@ class _SplashScreenHomeState extends State<SplashScreenHome> {
 
   void startTimer() {
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>Welcome()));
+      // Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>Welcome()));
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Welcome()));
     //  chooseUser(); //It will redirect  after 3 seconds
     });
   }
@@ -105,7 +104,7 @@ class _SplashScreenHomeState extends State<SplashScreenHome> {
     }
 
     if(user=="eng"){
-    //navigateEngineer();
+    // navigateEngineer();
       Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>EngineerHome()));
     }
   }

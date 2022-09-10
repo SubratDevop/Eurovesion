@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerPasswordResetModel.dart';
-import 'package:ev_testing_app/Screens/Customer/ForgotPassword/CustomerOtpVerify.dart';
-import 'package:ev_testing_app/Screens/Customer/ForgotPassword/CustomerVerify.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerPasswordResetModel.dart';
+import 'package:eurovision/Screens/Customer/ForgotPassword/CustomerOtpVerify.dart';
+import 'package:eurovision/Screens/Customer/ForgotPassword/CustomerVerify.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -92,7 +92,7 @@ class _CustomerPasswordReSetScreenState extends State<CustomerPasswordReSetScree
       // Fluttertoast.showToast(
       //   msg: "Please fill Up All Details",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.green,
       //   textColor: Colors.white,
@@ -238,7 +238,7 @@ class _CustomerPasswordReSetScreenState extends State<CustomerPasswordReSetScree
               Fluttertoast.showToast(
                 msg: message.toString(),
                 toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
+                gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
@@ -253,7 +253,7 @@ class _CustomerPasswordReSetScreenState extends State<CustomerPasswordReSetScree
               Fluttertoast.showToast(
                 msg: message.toString(),
                 toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
+                gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.green,
                 textColor: Colors.white,

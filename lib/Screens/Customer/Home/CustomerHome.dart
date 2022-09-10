@@ -1,20 +1,17 @@
 import 'dart:convert';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerComplainCountModel.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomeItems/CustomerItems.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomerComplainPage/CustomerCompletedComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomerComplainPage/CustomerPendingComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomerComplainPage/CustomerTotalComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomerCreateComplain/CustomerCreateComplain.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-
-import 'package:ev_testing_app/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerComplainCountModel.dart';
+import 'package:eurovision/Screens/Customer/CustomerComplainPage/CustomerCompletedComplain.dart';
+import 'package:eurovision/Screens/Customer/CustomerComplainPage/CustomerPendingComplain.dart';
+import 'package:eurovision/Screens/Customer/CustomerComplainPage/CustomerTotalComplain.dart';
+import 'package:eurovision/Screens/Customer/CustomerCreateComplain/CustomerCreateComplain.dart';
+import 'package:eurovision/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class CustomerHome extends StatelessWidget {
@@ -27,7 +24,7 @@ class CustomerHome extends StatelessWidget {
       customerTypeName,
       customerAddress,
       customerGst;
-  static String? totalComplain, pendingComplain, completedComplain;
+  static late String totalComplain, pendingComplain, completedComplain;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Fluttertoast.showToast(
       //   msg: "Please Check Login Credentials",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.green,
       //   textColor: Colors.white,
@@ -137,13 +134,25 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // ! BackButtonInterceptor
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    Fluttertoast.showToast(
+        msg: 'Back Button Clicked',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: themBlueColor);
+
+    return false;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    CustomerHome.totalComplain = "0";
     greetingMessage();
     upDateGreetingMessageAccordingToTime();
+    // BackButtonInterceptor.add(myInterceptor);
 
     getLoginCredentials();
   }
@@ -179,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         appBar: AppBar(
           backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
+          systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.light),
@@ -189,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0.0,
           title: Column(
             children: [
-              const Text(
+              Text(
                 "WELCOME TO EUROVESION",
                 style: TextStyle(
                     fontFamily: 'TimesNewRoman',
@@ -197,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w700,
                     color: themWhiteColor),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Align(
@@ -207,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
                             "Hi , " +
                                 CustomerHome.customerName.toString() +
@@ -215,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "!!" +
                                 "   " +
                                 greetingMessageStatus!,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontFamily: 'RobotoMono',
@@ -239,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.orange,
                 height: 4.0,
               ),
-              preferredSize: const Size.fromHeight(4.0)),
+              preferredSize: Size.fromHeight(4.0)),
         ),
 
         endDrawer: Container(
@@ -254,43 +263,40 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top:5.0),
-                  child: Container(
-                      width: width,
-                      height: height * 0.05,
-                      alignment: Alignment.topRight,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Text("Create Complain",
-                                style: const TextStyle(
-                                    fontFamily: 'Righteous',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.red)),
-                            RawMaterialButton(
-                              onPressed: () {
-                                Navigator.of(context, rootNavigator: true).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CustomerCreateComplain()));
-                              },
-                              child: Center(
-                                child: new Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 20.0,
-                                ),
+                Container(
+                    width: width,
+                    height: height * 0.05,
+                    alignment: Alignment.topRight,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Create Complain",
+                              style: TextStyle(
+                                  fontFamily: 'Righteous',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.red)),
+                          RawMaterialButton(
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomerCreateComplain()));
+                            },
+                            child: Center(
+                              child: new Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 20.0,
                               ),
-                              // shape: new CircleBorder(),
-                              shape: new CircleBorder(),
-                              elevation: 10.0,
-                              fillColor: Colors.orange,
-                              padding: const EdgeInsets.all(4.0),
                             ),
-                          ])),
-                ),
+                            // shape: new CircleBorder(),
+                            shape: new CircleBorder(),
+                            elevation: 10.0,
+                            fillColor: Colors.orange,
+                            padding: const EdgeInsets.all(4.0),
+                          ),
+                        ])),
 
                 isLoading
                     ? new Center(child: new CircularProgressIndicator())
@@ -317,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         child: Container(
                                           width: width * 0.4,
-                                          // height: height * 0.2,
+                                          height: height * 0.2,
                                           color: Colors.blueAccent,
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -328,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BoxShadow(
                                                     color: Colors.blue
                                                         .withOpacity(0.2),
-                                                    offset: const Offset(0, 25),
+                                                    offset: Offset(0, 25),
                                                     blurRadius: 6,
                                                     spreadRadius: -5)
                                               ],
@@ -338,31 +344,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   top: 20),
                                               child: Column(
                                                 children: [
-                                                  const Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 5, right: 5),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
                                                       "Total Complains",
                                                       style: TextStyle(
                                                           fontFamily:
                                                               'Righteous',
-                                                          fontSize: 20,
+                                                          fontSize: 25,
                                                           fontWeight:
                                                               FontWeight.w700,
                                                           color:
                                                               themWhiteColor),
                                                     )),
                                                   ),
-                                                  const SizedBox(height: 20),
+                                                  SizedBox(height: 20),
                                                   Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 5, right: 5),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
                                                       CustomerHome.totalComplain
                                                           .toString(),
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                           fontFamily:
                                                               'Righteous',
                                                           fontSize: 30,
@@ -372,11 +380,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               themWhiteColor),
                                                     )),
                                                   ),
-                                                 const  SizedBox(height: 20),
-                                                  const Padding(
+                                                  SizedBox(height: 20),
+                                                  Padding(
                                                     padding:
-                                                        EdgeInsets.only(
-                                                            left: 5, right: 5,bottom: 5),
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
                                                       "View",
@@ -406,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         child: Container(
                                           width: width * 0.4,
-                                          // height: height * 0.2,
+                                          height: height * 0.2,
                                           color: Colors.red,
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -417,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BoxShadow(
                                                     color: Colors.red
                                                         .withOpacity(0.2),
-                                                    offset: const Offset(0, 25),
+                                                    offset: Offset(0, 25),
                                                     blurRadius: 6,
                                                     spreadRadius: -5)
                                               ],
@@ -427,9 +435,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   top: 20),
                                               child: Column(
                                                 children: [
-                                                  const Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 5, right: 5),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
                                                       "Pending Complains",
@@ -443,17 +452,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               themWhiteColor),
                                                     )),
                                                   ),
-                                                  const SizedBox(height: 20),
+                                                  SizedBox(height: 20),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
-                                                      CustomerHome
-                                                          .pendingComplain
-                                                          .toString(),
-                                                      style: const TextStyle(
+                                                      CustomerHome.pendingComplain
+                                                                  .toString() ==
+                                                              null
+                                                          ? ""
+                                                          : CustomerHome
+                                                              .pendingComplain
+                                                              .toString(),
+                                                      style: TextStyle(
                                                           fontFamily:
                                                               'Righteous',
                                                           fontSize: 30,
@@ -463,10 +476,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               themWhiteColor),
                                                     )),
                                                   ),
-                                                  const SizedBox(height: 20),
-                                                  const Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 5, right: 5,bottom: 5),
+                                                  SizedBox(height: 20),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5, right: 5),
                                                     child: FittedBox(
                                                         child: Text(
                                                       "View",
@@ -491,7 +505,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 40),
+                                padding: EdgeInsets.only(top: 40),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -505,7 +519,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                       child: Container(
                                         width: width * 0.4,
-                                        // height: height * 0.2,
+                                        height: height * 0.2,
                                         color: Colors.green,
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -516,7 +530,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               BoxShadow(
                                                   color: Colors.green
                                                       .withOpacity(0.2),
-                                                  offset: const Offset(0, 25),
+                                                  offset: Offset(0, 25),
                                                   blurRadius: 6,
                                                   spreadRadius: -5)
                                             ],
@@ -526,9 +540,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const EdgeInsets.only(top: 20),
                                             child: Column(
                                               children: [
-                                                const Padding(
+                                                Padding(
                                                   padding:
-                                                      EdgeInsets.only(
+                                                      const EdgeInsets.only(
                                                           left: 5, right: 5),
                                                   child: FittedBox(
                                                       child: Text(
@@ -541,7 +555,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: themWhiteColor),
                                                   )),
                                                 ),
-                                                const SizedBox(height: 20),
+                                                SizedBox(height: 20),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -551,7 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     CustomerHome
                                                         .completedComplain
                                                         .toString(),
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                         fontFamily: 'Righteous',
                                                         fontSize: 30,
                                                         fontWeight:
@@ -559,11 +573,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: themWhiteColor),
                                                   )),
                                                 ),
-                                                const SizedBox(height: 20),
-                                                const Padding(
+                                                SizedBox(height: 20),
+                                                Padding(
                                                   padding:
-                                                      EdgeInsets.only(
-                                                          left: 5, right: 5,bottom: 5),
+                                                      const EdgeInsets.only(
+                                                          left: 5, right: 5),
                                                   child: FittedBox(
                                                       child: Text(
                                                     "View",

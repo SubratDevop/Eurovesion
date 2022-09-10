@@ -1,9 +1,9 @@
 import 'dart:async';
 
 
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Engineer/Login/EngineerLogin.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Engineer/Login/EngineerLogin.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

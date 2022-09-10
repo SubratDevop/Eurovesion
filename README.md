@@ -1,4 +1,4 @@
-# ev_testing_app
+# eurovision
 
 A new Flutter project.
 

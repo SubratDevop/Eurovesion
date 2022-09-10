@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:ev_testing_app/Screens/SplashScreen/SplashScreen.dart';
+import 'package:eurovision/Screens/SplashScreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

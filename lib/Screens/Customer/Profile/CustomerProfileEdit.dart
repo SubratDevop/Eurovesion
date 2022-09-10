@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerProfileEditModel.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
-import 'package:ev_testing_app/Screens/Customer/Profile/CustomerProfile.dart';
-import 'package:ev_testing_app/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerProfileEditModel.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
+import 'package:eurovision/Screens/Customer/Profile/CustomerProfile.dart';
+import 'package:eurovision/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert' as convert;
@@ -127,7 +127,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
       // Fluttertoast.showToast(
       //   msg: "Existing Customer",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.red,
       //   textColor: Colors.white,
@@ -645,7 +645,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
                                       Fluttertoast.showToast(
                                           msg: resMessage.toString(),
                                           toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
+                                          gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.green,
                                           textColor: Colors.white,
@@ -678,7 +678,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
                                   // Fluttertoast.showToast(
                                   //  msg: "not sufficient",
                                   //   toastLength: Toast.LENGTH_SHORT,
-                                  //   gravity: ToastGravity.BOTTOM,
+                                  //   gravity: ToastGravity.CENTER,
                                   //   timeInSecForIosWeb: 1,
                                   //   backgroundColor: Colors.red,
                                   //   textColor: Colors.white,

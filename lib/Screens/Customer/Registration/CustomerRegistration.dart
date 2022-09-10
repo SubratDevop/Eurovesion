@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerRegistrationModel.dart';
-import 'package:ev_testing_app/Screens/Customer/Login/CustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerRegistrationModel.dart';
+import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
+import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert' as convert;
@@ -230,6 +230,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       //   'password': password,
       // }
     );
+
+    print(_GSTController.text.toString());
     //var responsebody=jsonDecode(jsonDecode(response.body));
     //if(responsebody['status']==)
     if (response.statusCode == 200) {
@@ -250,7 +252,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       // Fluttertoast.showToast(
       //   msg: "Existing Customer",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.red,
       //   textColor: Colors.white,
@@ -336,7 +338,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           //   ]
           // ),
 
-          child: TextFormField(
+        child: TextFormField(
         controller: _branchCodeController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
@@ -743,11 +745,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         backgroundColor: Colors.transparent,
         toolbarHeight: height * 0.2,
         elevation: 0.0,
-        title: const Align(
+        title: Align(
           alignment: Alignment.topLeft,
           child: FittedBox(
             child: Padding(
-              padding: EdgeInsets.only(left: 10, top: 40),
+              padding: const EdgeInsets.only(left: 10, top: 40),
               child: Text(
                 "Registration",
                 style: TextStyle(
@@ -1411,7 +1413,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         Fluttertoast.showToast(
                                             msg: resMessage.toString(),
                                             toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
+                                            gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.green,
                                             textColor: Colors.white,
@@ -1433,7 +1435,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       Fluttertoast.showToast(
                                           msg: "Existing User",
                                           toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
+                                          gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.red,
                                           textColor: Colors.white,

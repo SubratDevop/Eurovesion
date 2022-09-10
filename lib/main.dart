@@ -1,11 +1,12 @@
-import 'package:ev_testing_app/Screens/SplashScreen/SplashScreen.dart';
-import 'package:ev_testing_app/bloc/CustomerLogin_bloc.dart';
-import 'package:ev_testing_app/bloc/EnginerLogin_bloc.dart';
-import 'package:flutter/foundation.dart';
+import 'package:eurovision/Screens/SplashScreen/SplashScreen.dart';
+import 'package:eurovision/bloc/CustomerLogin_bloc.dart';
+import 'package:eurovision/bloc/EnginerLogin_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:device_preview/device_preview.dart';
+
+import 'Screens/Customer/Login/CustomerLogin.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +14,6 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp( MyApp());
-
-// //! DevicePreview
-//   runApp(DevicePreview(
-//     enabled: !kReleaseMode,
-//     builder: (context) => MyApp(),
-//   ));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,8 +25,6 @@ class MyApp extends StatelessWidget {
         Provider<EngineerLoginBloc>(create: (context) => EngineerLoginBloc()),
       ],
       child: MaterialApp(
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
         debugShowCheckedModeBanner: false,
         title: 'Eurovesion',
         theme: ThemeData(
@@ -40,7 +33,13 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.amber,
           primarySwatch: Colors.indigo,
         ),
-        home: SplashScreen(),
+
+initialRoute: "/",
+       routes: {
+        "/" : (context) => SplashScreen(),
+        "CustomerLogin" : (context)  => CustomerLogin(),
+       },
+        // home: SplashScreen(),
       ),
     );
   }

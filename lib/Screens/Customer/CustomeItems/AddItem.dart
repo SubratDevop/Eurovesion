@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerItemsModel.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomeItems/CustomerItems.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerItemsModel.dart';
+import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -96,7 +96,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   //     // Fluttertoast.showToast(
   //     //   msg: "Please Check Login Credentials",
   //     //   toastLength: Toast.LENGTH_SHORT,
-  //     //   gravity: ToastGravity.BOTTOM,
+  //     //   gravity: ToastGravity.CENTER,
   //     //   timeInSecForIosWeb: 1,
   //     //   backgroundColor: Colors.green,
   //     //   textColor: Colors.white,
@@ -139,10 +139,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
       },
     );
 
-    if (response.statusCode == 200 ) {
-      
+    if (response.statusCode == 200) {
       return CustomerItemsModel.fromJson(json.decode(response.body));
-      
     } else {
       print("status false123");
       throw Exception('Failed to get item.');
@@ -151,11 +149,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
 // Future<CustomerGetItemTypeComplainMOdel>
   Future fetchCustomerItemforComplain() async {
-    String customerGetItemforComplainTypeUrl =
-        customerGetItemforComplainTypeApi;
+    String customerAddItemUrl = customerAddItemTypeApi;
     print("fetchCustomerItemforComplain called");
     final http.Response response = await http.post(
-      Uri.parse(customerGetItemforComplainTypeUrl),
+      Uri.parse(customerAddItemUrl),
       headers: <String, String>{
         // 'Accept': 'application/json',
         // 'Content-type': 'application/json',
@@ -164,16 +161,20 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
       body: {
         'customerid': CustomerHome.customerId.toString(),
+        'token': CustomerHome.customerToken
       },
       // body: {
       //   'email': email,
       //   'password': password,
       // }
     );
-
+print("**********" + response.statusCode.toString());
+print(CustomerHome.customerId.toString());
+print(CustomerHome.customerToken.toString());
     if (response.statusCode == 200) {
       setState(() {
         var items = json.decode(response.body)['data'] ?? [];
+        print("*****************" + response.body.toString());
 
         itemTypeForComplain = items;
       });
@@ -184,7 +185,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
       // Fluttertoast.showToast(
       //   msg: "Please Check Login Credentials",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.green,
       //   textColor: Colors.white,
@@ -227,7 +228,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         context: context,
         initialDate: currentDate_start,
         firstDate: DateTime(2015),
-        lastDate: DateTime(2050)))  !;
+        lastDate: DateTime(2050)))!;
     if (pickedDate != null && pickedDate != currentDate_start)
       setState(() {
         currentDate_start =
@@ -283,18 +284,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light),
 
-        backgroundColor: Colors.transparent,
+        backgroundColor: themBlueColor,
+
         toolbarHeight: height * 0.1,
         elevation: 0.0,
-        // title: Align(
-        //   alignment: Alignment.topLeft,
-        //   child: FittedBox(
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(left: 10,top: 40),
-        //       child: Text("Login",style: TextStyle(fontFamily: 'AkayaKanadaka',fontSize: 60,fontWeight: FontWeight.w700,color: themWhiteColor),),
-        //     ),
-        //   ),
-        // ),
+        centerTitle: true,
+        title: Text(
+          "Add Item",
+          style: TextStyle(
+              fontFamily: 'TimesNEwRoman',
+              fontSize: 30,
+              fontWeight: FontWeight.w800,
+              color: themWhiteColor),
+        ),
         leading: IconButton(
           icon: Icon(
             Icons.keyboard_arrow_left,
@@ -307,29 +309,29 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 .push(MaterialPageRoute(builder: (context) => CustomerHome()));
           },
         ),
-        flexibleSpace: ClipPath(
-          clipper: Customshape(),
-          child: Container(
-            //height: height*0.2,
-            width: MediaQuery.of(context).size.width,
-            color: themBlueColor,
-            child: Center(
-              child: FittedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    "Add Item",
-                    style: TextStyle(
-                        fontFamily: 'AkayaKanadaka',
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: themWhiteColor),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        // flexibleSpace: ClipPath(
+        //   clipper: Customshape(),
+        //   child: Container(
+        //     //height: height*0.2,
+        //     width: MediaQuery.of(context).size.width,
+        //     color: themBlueColor,
+        //     child: Center(
+        //       child: FittedBox(
+        //         child: Padding(
+        //           padding: const EdgeInsets.only(left: 10),
+        //           child: Text(
+        //             "Add Item",
+        //             style: TextStyle(
+        //                 fontFamily: 'TimesNEwRoman',
+        //                 fontSize: 30,
+        //                 fontWeight: FontWeight.w800,
+        //                 color: themWhiteColor),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
 
       // appBar: AppBar(
@@ -377,22 +379,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
                             // itemTypeForComplain.isEmpty
                             //     ? Center(child: CircularProgressIndicator())
                             //     :
-                                 Container(
-                                    width: width * 0.5,
-                                    child: Text(
-                                      "Item",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontFamily: 'RobotoMono',
-                                          fontSize: 20,
-                                          color: Colors.black87),
-                                    )),
+                            Container(
+                                width: width * 0.5,
+                                child: Text(
+                                  "Item",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontFamily: 'RobotoMono',
+                                      fontSize: 20,
+                                      color: Colors.black87),
+                                )),
                             Container(
                               height: 50.0,
                               width: MediaQuery.of(context).size.width - 10,
                               child: DropdownButtonFormField<String>(
-                                isExpanded: true,
+                                // isExpanded: true,
                                 icon: const Icon(
                                   Icons.arrow_drop_down_circle,
                                   color: Colors.black45,
@@ -414,14 +416,16 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                 validator: (value) =>
                                     value == null ? 'Item  required' : null,
                                 items: itemTypeForComplain.map((list) {
-                                  itemId = list['itemid'].toString();
+                                  // itemId = list['itemid'].toString();
+                                  itemId = list['categoryid'].toString();
                                   return DropdownMenuItem(
                                     value: list['id'].toString(),
                                     child: FittedBox(
                                         child: Padding(
                                       padding: const EdgeInsets.only(left: 0),
                                       child: Text(
-                                        list['item_name'].toString(),
+                                        // list['item_name'].toString(),
+                                        list['itemname'].toString(),
                                         style: TextStyle(
                                             fontFamily: 'RobotoMono',
                                             fontSize: 20,
@@ -769,13 +773,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                               scaffoldKey.currentState!.showSnackBar(
                                   SnackBar(content: Text("Date is required")));
                             } else {
-                            //  Navigator.of(context, rootNavigator: true)
-                            //             .push(MaterialPageRoute(
-                            //                 builder: (context) =>
-                            //                     CustomerItems()));
-                            //   setState(() {
-                            //     print("item id = ${itemId}");
-                            //   });
+                              //  Navigator.of(context, rootNavigator: true)
+                              //             .push(MaterialPageRoute(
+                              //                 builder: (context) =>
+                              //                     CustomerItems()));
+                              //   setState(() {
+                              //     print("item id = ${itemId}");
+                              //   });
                               try {
                                 var response =
                                     await fetchcustomerMachineRegistrationProcess(
@@ -787,14 +791,13 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                   _billController.text,
                                   date.toString(),
                                 );
-                                  bool res = response.status;
-                                   var message = response.message; 
+                                bool res = response.status;
+                                var message = response.message;
                                 // setState(() {
                                 //   msg = response.message;
                                 // });
 
                                 if (res == true) {
-                                 
                                   setState(() {
                                     Navigator.of(context, rootNavigator: true)
                                         .push(MaterialPageRoute(
@@ -802,27 +805,26 @@ class _AddItemScreenState extends State<AddItemScreen> {
                                                 CustomerItems()));
                                   });
 
-                                   Fluttertoast.showToast(
-                                      msg: message.toString(),
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
+                                Fluttertoast.showToast(
+      msg: msg.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: themBlueColor
+    );
                                 }
 
                                 if (res == false) {
-                                  Fluttertoast.showToast(
-                                      msg: msg.toString(),
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
+                                                  Fluttertoast.showToast(
+      msg: msg.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: themBlueColor
+    );
                                 }
-                              } catch (e) {
+                              }
+                               catch (e) {
                                 scaffoldKey.currentState!.showSnackBar(
                                     SnackBar(content: Text(msg.toString())));
                               }

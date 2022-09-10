@@ -1,5 +1,5 @@
 
-import 'package:ev_testing_app/Validation/EngineerValidator.dart';
+import 'package:eurovision/Validation/EngineerValidator.dart';
 import 'package:rxdart/rxdart.dart';
 
 class EngineerLoginBloc extends Object with EngineerValidators implements BaseBloc{

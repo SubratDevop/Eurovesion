@@ -1,19 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerLoginModel.dart';
-import 'package:ev_testing_app/Screens/Customer/ForgotPassword/CustomerVerify.dart';
-import 'package:ev_testing_app/Screens/Customer/Home/CustomerHome.dart';
-import 'package:ev_testing_app/Screens/Customer/NoExistingCustomer/NoExistingCustomer.dart';
-import 'package:ev_testing_app/Screens/Customer/NoInternent/NoInternetCustomerLogin.dart';
-import 'package:ev_testing_app/Screens/Customer/Registration/CustomerRegistration.dart';
-import 'package:ev_testing_app/Screens/Engineer/Login/EngineerLogin.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerLoginModel.dart';
+import 'package:eurovision/Screens/Customer/ForgotPassword/CustomerVerify.dart';
+import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
+import 'package:eurovision/Screens/Customer/NoExistingCustomer/NoExistingCustomer.dart';
+import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerLogin.dart';
+import 'package:eurovision/Screens/Customer/Registration/CustomerRegistration.dart';
+import 'package:eurovision/Screens/Engineer/Login/EngineerLogin.dart';
+import 'package:eurovision/Screens/WelCome/WelCome.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ev_testing_app/bloc/CustomerLogin_bloc.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/bloc/CustomerLogin_bloc.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -54,13 +56,13 @@ class CustomerLoginScreen extends StatefulWidget {
 }
 
 class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  final styleWelcome = const TextStyle(
+  final styleWelcome = TextStyle(
       fontSize: 30, fontWeight: FontWeight.w700, color: themWhiteColor);
-  final styleLogin = const TextStyle(
+  final styleLogin = TextStyle(
       fontSize: 50, fontWeight: FontWeight.w700, color: themWhiteColor);
-  final styleForgotPassword = const TextStyle(
+  final styleForgotPassword = TextStyle(
       fontSize: 100, fontWeight: FontWeight.w600, color: themWhiteColor);
 
   late TextEditingController _emailController;
@@ -71,12 +73,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
   // global key for form.
   bool _autovalidate = false;
 
-  //// checking internet connectivity start
-
   bool _isConnected = true;
 
   // This function is triggered when the floating button is pressed
-  //! InternetConnection
   Future<void> _checkInternetConnection() async {
     try {
       final response = await InternetAddress.lookup('www.google.com');
@@ -90,71 +89,66 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
         _isConnected = false;
       });
       print(err);
-      Navigator.of(context, rootNavigator: true).push(
+      // Navigator.of(context, rootNavigator: true).push( MaterialPageRoute(builder: (context) => NoInternetCustomerLogin()));
+      Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => NoInternetCustomerLogin()));
     }
   }
 
   //// checking internet connectivity end
 
-  //!Customer Login Start
+  ////////////Customer Login Start///////////
   Future<CustomerLoginModel> customerLoginProcess(
       String contact, String password) async {
     String customerLogin_url = loginApi;
     final http.Response response = await http.post(
       Uri.parse(customerLogin_url),
-      headers: <String, String>{
-        // 'Accept': 'application/json',
-        // 'Content-type': 'application/json',
-        'Accept': 'application/json'
-      },
-
+      headers: <String, String>{'Accept': 'application/json'},
       body: {
-        'data1':
-            contact, //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:MsviEitdw2gIwX1OzeeaNpzhvApE4Ey6FBglhdUXLFA=:AAAAAAAAAAAAAAAAAAAAAA==
-        'data2':
-            password, //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:k/z0llJArYFJRInSY3HkQA==:AAAAAAAAAAAAAAAAAAAAAA==
+        'data1': contact,
+        'data2': password,
       },
-      // body: {
-      //   'email': email,
-      //   'password': password,
-      // }
-
-      //customer id AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:yQ5AZJswP01PMdYIQZ85ww==:AAAAAAAAAAAAAAAAAAAAAA==
     );
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          // msg: message.toString(),
-          msg: "Login Successful",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: themBlueColor,
-          textColor: Colors.white,
-          fontSize: 16.0);
       return CustomerLoginModel.fromJson(json.decode(response.body));
     } else {
-      // Fluttertoast.showToast(
-      //   msg: "Please Check Login Credentials",
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   timeInSecForIosWeb: 1,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0
-      // );
-
       throw Exception('Failed to create album.');
     }
   }
-  ////////////Customer Login End///////////
+
+  // ! BackButtonInterceptor
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    // Fluttertoast.showToast(
+    //   msg: 'Sorry can not back here',
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.BOTTOM,
+    //   timeInSecForIosWeb: 1,
+    //   backgroundColor: themBlueColor
+    // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WelComeScreen(),
+      ),
+    );
+    // Navigator.pushAndRemoveUntil(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (BuildContext context) => WelComeScreen(),
+    //   ),
+    //   (route) => true,
+    // );
+    // exit(0);
+    print("BACK BUTTON!"); // Do some stuff.
+    return true;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    // BackButtonInterceptor.add(myInterceptor);
     _checkInternetConnection();
 
     _emailController = TextEditingController();
@@ -167,6 +161,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
   }
 
   @override
@@ -176,281 +171,265 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: themWhiteColor,
-        appBar: AppBar(
-          backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: themBlueColor,
-              statusBarBrightness: Brightness.light,
-              statusBarIconBrightness: Brightness.light),
-          backgroundColor: Colors.transparent,
-          toolbarHeight: height * 0.2,
-          elevation: 0.0,
-          title: const Align(
-            alignment: Alignment.topLeft,
-            child: FittedBox(
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, top: 50),
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                      fontFamily: 'TimesNewRoman',
-                      fontSize: 50,
-                      fontWeight: FontWeight.w700,
-                      color: themWhiteColor),
-                ),
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: themWhiteColor,
+      appBar: AppBar(
+        backwardsCompatibility: false,
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: themBlueColor,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.light),
+        backgroundColor: Colors.transparent,
+        toolbarHeight: height * 0.2,
+        elevation: 0.0,
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 50),
+              child: Text(
+                "Login",
+                style: TextStyle(
+                    fontFamily: 'TimesNewRoman',
+                    fontSize: 50,
+                    fontWeight: FontWeight.w700,
+                    color: themWhiteColor),
               ),
             ),
           ),
-          flexibleSpace: ClipPath(
-            clipper: Customshape(),
-            child: Container(
-              //height: height*0.2,
-              width: MediaQuery.of(context).size.width,
-              color: themBlueColor,
-              child: Center(
-                child: const FittedBox(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                      "Eurovesion",
-                      style: TextStyle(
-                          fontFamily: 'TimesNewRoman',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: themWhiteColor),
-                    ),
+        ),
+        flexibleSpace: ClipPath(
+          clipper: Customshape(),
+          child: Container(
+            //height: height*0.2,
+            width: MediaQuery.of(context).size.width,
+            color: themBlueColor,
+            child: Center(
+              child: FittedBox(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    "Eurovesion",
+                    style: TextStyle(
+                        fontFamily: 'TimesNewRoman',
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: themWhiteColor),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        body: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (overscroll) {
-            overscroll.disallowGlow();
-            return false;
-          },
-          child: Form(
-            key: _formkey,
-            // autovalidate: _autovalidate,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+      ),
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (overscroll) {
+          overscroll.disallowGlow();
+          return false;
+        },
+        child: Form(
+          key: _formkey,
+          // autovalidate: _autovalidate,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
 
-            child: SingleChildScrollView(
-              // reverse: true,
-              child: Column(
-                children: [
-                  Container(
-                    height: height * 0.8,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              children: [
+                Container(
+                  // height: height * 0.7,
+
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 30),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Email/Phone No",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: themBlueColor),
+                            )),
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffEFF3F6),
+                              borderRadius: BorderRadius.circular(0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ]),
+                          child: StreamBuilder<String>(
+                              stream: bloc.loginEmail,
+                              //Instead of TextEditingController, bloc carrying input value by calling loginEmail
+                              builder: (context, snapshot) {
+                                return TextField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: _emailController,
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(left: 20),
+                                      hintText: "Enter email or phone",
+                                      labelText: "email/phone",
+                                      errorText: snapshot.error?.toString(),
+                                      border: InputBorder.none
+                                      // border: OutlineInputBorder(
+                                      //   borderRadius: BorderRadius.circular(20)
+                                      // )
+
+                                      ),
+                                  onChanged: bloc.changeLoginEmail,
+                                  //Instead of TextEditingController,  bloc carrying changing input value by calling loginEmail
+                                );
+                              }),
                         ),
+                      ),
 
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10, top: 30),
-                          child: const Align(
-                              alignment: Alignment.topLeft,
-                              child: const Text(
-                                "Email/Phone No",
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: themBlueColor),
-                              )),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Password",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: themBlueColor),
+                            )),
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffEFF3F6),
+                              borderRadius: BorderRadius.circular(0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+
+                                // BoxShadow(
+                                //   color: Color.fromRGBO(0, 0, 0, 0.1),
+                                //   offset: Offset(6,2),
+                                //   blurRadius: 6.0,
+                                //   spreadRadius: 3.0
+
+                                // ),
+                                // BoxShadow(
+                                //   color: Color.fromRGBO(255, 255, 255, 0.9),
+                                //   offset: Offset(-6,-2),
+                                //   blurRadius: 6.0,
+                                //   spreadRadius: 3.0
+                                // )
+                              ]),
+                          child: StreamBuilder<String>(
+                              stream: bloc.loginPassword,
+                              //Instead of TextEditingController, bloc carrying input value by calling loginPassword
+                              builder: (context, snapshot) {
+                                return TextField(
+                                  obscureText: _hidePassword,
+                                  keyboardType: TextInputType.text,
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(left: 20),
+                                      hintText: "Enter user password",
+                                      labelText: "password",
+                                      errorText: snapshot.error?.toString(),
+                                      border: InputBorder.none,
+                                      // border: OutlineInputBorder(
+                                      //   borderRadius: BorderRadius.circular(20)
+                                      // )
+
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _hidePassword = !_hidePassword;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            _hidePassword
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                            size: 17.0,
+                                            color: themBlueColor,
+                                          ))),
+                                  onChanged: bloc.changeLoginPassword,
+                                  //Instead of TextEditingController,  bloc carrying changing input value by calling loginPassword
+                                );
+                              }),
                         ),
+                      ),
 
-                        const SizedBox(
-                          height: 10,
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 20, top: 20),
+                        child: _buildLoginButton(),
+                      ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, bottom: 30),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: const Color(0xffEFF3F6),
-                                borderRadius: BorderRadius.circular(0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: _buildForgotPassword()),
+                      ),
 
-                                  // BoxShadow(
-                                  //   color: Color.fromRGBO(0, 0, 0, 0.1),
-                                  //   offset: Offset(6,2),
-                                  //   blurRadius: 6.0,
-                                  //   spreadRadius: 3.0
+                      SizedBox(
+                        height: 50,
+                      ),
 
-                                  // // ),
-                                  // BoxShadow(
-                                  //   color: Color.fromRGBO(255, 255, 255, 0.9),
-                                  //   offset: Offset(-6,-2),
-                                  //   blurRadius: 6.0,
-                                  //   spreadRadius: 3.0
-                                  // )
-                                ]),
-                            child: StreamBuilder<String>(
-                                stream: bloc.loginEmail,
-                                //Instead of TextEditingController, bloc carrying input value by calling loginEmail
-                                builder: (context, snapshot) {
-                                  return TextField(
-                                    keyboardType: TextInputType.emailAddress,
-                                    controller: _emailController,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 20),
-                                        hintText: "Enter email or phone",
-                                        labelText: "email/phone",
-                                        errorText: snapshot.error?.toString(),
-                                        border: InputBorder.none
-                                        // border: OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.circular(20)
-                                        // )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [_buildRrgistration()],
+                      ),
 
-                                        ),
-                                    onChanged: bloc.changeLoginEmail,
-                                    //Instead of TextEditingController,  bloc carrying changing input value by calling loginEmail
-                                  );
-                                }),
-                          ),
-                        ),
+                      SizedBox(
+                        height: 10,
+                      ),
 
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: const Align(
-                              alignment: Alignment.topLeft,
-                              child: const Text(
-                                "Password",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: themBlueColor),
-                              )),
-                        ),
-
-                        const SizedBox(
-                          height: 10,
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, bottom: 20),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: const Color(0xffEFF3F6),
-                                borderRadius: BorderRadius.circular(0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-
-                                  // BoxShadow(
-                                  //   color: Color.fromRGBO(0, 0, 0, 0.1),
-                                  //   offset: Offset(6,2),
-                                  //   blurRadius: 6.0,
-                                  //   spreadRadius: 3.0
-
-                                  // ),
-                                  // BoxShadow(
-                                  //   color: Color.fromRGBO(255, 255, 255, 0.9),
-                                  //   offset: Offset(-6,-2),
-                                  //   blurRadius: 6.0,
-                                  //   spreadRadius: 3.0
-                                  // )
-                                ]),
-                            child: StreamBuilder<String>(
-                                stream: bloc.loginPassword,
-                                //Instead of TextEditingController, bloc carrying input value by calling loginPassword
-                                builder: (context, snapshot) {
-                                  return TextField(
-                                    obscureText: _hidePassword,
-                                    keyboardType: TextInputType.text,
-                                    controller: _passwordController,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 20),
-                                        hintText: "Enter user password",
-                                        labelText: "password",
-                                        errorText: snapshot.error?.toString(),
-                                        border: InputBorder.none,
-                                        // border: OutlineInputBorder(
-                                        //   borderRadius: BorderRadius.circular(20)
-                                        // )
-
-                                        suffixIcon: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                _hidePassword = !_hidePassword;
-                                              });
-                                            },
-                                            icon: Icon(
-                                                _hidePassword
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
-                                                size: 17.0))),
-                                    onChanged: bloc.changeLoginPassword,
-                                    //Instead of TextEditingController,  bloc carrying changing input value by calling loginPassword
-                                  );
-                                }),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, bottom: 20, top: 20),
-                          child: _buildLoginButton(),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Align(
-                              alignment: Alignment.topRight,
-                              child: _buildForgotPassword()),
-                        ),
-
-                        const SizedBox(
-                          height: 50,
-                        ),
-
-                        Row(
+                      Container(
+                        height: height * 0.1,
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [_buildRrgistration()],
+                          children: [_buildEngineer()],
                         ),
+                      ),
 
-                        const SizedBox(
-                          height: 10,
-                        ),
-
-                        Container(
-                          height: height * 0.1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [_buildEngineer()],
-                          ),
-                        ),
-
-                        // Padding(
-                        //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                        // )
-                      ],
-                    ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                      // )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -552,13 +531,23 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                         //   )
                         // );
 
-                        Navigator.of(context, rootNavigator: true).push(
+                        Fluttertoast.showToast(
+                            // msg: message.toString(),
+                            msg: "Login successful!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: themBlueColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        // Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => CustomerHome()));
+                        Navigator.pushReplacement(
+                            context,
                             MaterialPageRoute(
                                 builder: (context) => CustomerHome()));
                       }
 
                       if (res == false) {
-                        // scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("User Dose not Exist".toString())));
                         Fluttertoast.showToast(
                             msg: response.message.toString(),
                             toastLength: Toast.LENGTH_SHORT,
@@ -567,6 +556,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                             backgroundColor: themBlueColor,
                             textColor: Colors.white,
                             fontSize: 16.0);
+                        //scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("User Dose not Exist".toString())));
                         // Navigator.of(context, rootNavigator: true).push(
                         //     MaterialPageRoute(
                         //         builder: (context) => NoExistingCustomer()));
@@ -586,9 +576,9 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                     ? Colors.grey
                     : themBlueColor,
               ),
-              child: const Text(
+              child: Text(
                 "Login",
-                style: const TextStyle(
+                style: TextStyle(
                     fontFamily: 'TimesNewRoman',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -606,7 +596,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
               Navigator.of(context, rootNavigator: true).push(
                   MaterialPageRoute(builder: (context) => CustomerVerify()));
             },
-            child: const Text(
+            child: Text(
               "Forgot Password !",
               style: TextStyle(
                   fontFamily: 'AkayaKanadaka',
@@ -620,16 +610,16 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     return Container(
         child: Row(
       children: [
-        const Text(
+        Text(
           "New User ?  ",
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
         ),
-        const SizedBox(
+        SizedBox(
           width: 2,
         ),
         InkWell(
-          child: const Text(
+          child: Text(
             "Register here. !!",
             style: TextStyle(
                 decoration: TextDecoration.underline,
@@ -650,20 +640,21 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     return Container(
         child: Row(
       children: [
-        const Text(
+        Text(
           "Are You Engineer ?  ",
-          style: const TextStyle(
+          style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
         ),
-        const SizedBox(
+        SizedBox(
           width: 2,
         ),
         InkWell(
             onTap: () {
-              Navigator.of(context, rootNavigator: true).push(
+              // Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => EngineerLogin()));
+              Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => EngineerLogin()));
             },
-            child: const Text(
+            child: Text(
               "Click here. !!",
               style: TextStyle(
                   decoration: TextDecoration.underline,

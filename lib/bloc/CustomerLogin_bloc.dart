@@ -1,5 +1,5 @@
 
-import 'package:ev_testing_app/Validation/CustomerValidator.dart';
+import 'package:eurovision/Validation/CustomerValidator.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CustomerLoginBloc extends Object with CustomerValidators implements BaseBloc{
@@ -19,7 +19,7 @@ class CustomerLoginBloc extends Object with CustomerValidators implements BaseBl
  Function(String) get changeLoginPassword => _loginPassword.sink.add;
 
   submit() {
-    print("abc");
+    print("abc");   
   }
 
   @override

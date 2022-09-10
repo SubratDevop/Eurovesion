@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/CustomerModel/CustomerRegistrationModel.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/NoInternent/NoInternetEngineerCustomerRegistration.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/CustomerModel/CustomerRegistrationModel.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/NoInternent/NoInternetEngineerCustomerRegistration.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -239,6 +239,8 @@ class _EngineerCustomerRegistrationScreenState
     );
     //var responsebody=jsonDecode(jsonDecode(response.body));
     //if(responsebody['status']==)
+    print("*****************");
+    print(response.toString());
     if (response.statusCode == 200) {
       // final responseBody=json.decode(response.body);
       // SignIn.token=responseBody['auth_token'];
@@ -257,7 +259,7 @@ class _EngineerCustomerRegistrationScreenState
       // Fluttertoast.showToast(
       //   msg: "Existing Customer",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.red,
       //   textColor: Colors.white,
@@ -304,7 +306,7 @@ class _EngineerCustomerRegistrationScreenState
           child: TextFormField(
         controller: _nameController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Customer Name",
           hintStyle: TextStyle(fontSize: 12),
@@ -346,9 +348,9 @@ class _EngineerCustomerRegistrationScreenState
           child: TextFormField(
         controller: _branchCodeController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
-          hintText: "Enter Branch code & Name",
+          hintText: "branch code",
           hintStyle: TextStyle(fontSize: 12),
           //labelText: "branch code",
 
@@ -388,7 +390,7 @@ class _EngineerCustomerRegistrationScreenState
           child: TextFormField(
         controller: _contactPersonController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Contact Person",
           hintStyle: TextStyle(fontSize: 12),
@@ -430,7 +432,7 @@ class _EngineerCustomerRegistrationScreenState
           child: TextFormField(
         controller: _emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Email",
           hintStyle: TextStyle(fontSize: 12),
@@ -481,7 +483,7 @@ class _EngineerCustomerRegistrationScreenState
         maxLengthEnforcement:MaxLengthEnforcement.enforced,
         controller: _contactNumberController,
         keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Contact Number",
           hintStyle: TextStyle(fontSize: 12),
@@ -527,7 +529,7 @@ class _EngineerCustomerRegistrationScreenState
           child: TextFormField(
         controller: _addressController,
         keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Address",
           hintStyle: TextStyle(fontSize: 12),
@@ -571,7 +573,7 @@ class _EngineerCustomerRegistrationScreenState
         maxLengthEnforcement:MaxLengthEnforcement.enforced,
         controller: _pincodeController,
         keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Pincode",
           hintStyle: TextStyle(fontSize: 12),
@@ -614,7 +616,7 @@ class _EngineerCustomerRegistrationScreenState
         controller: _passwordController,
         keyboardType: TextInputType.visiblePassword,
         obscureText: _hidePassword,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.only(left: 0),
           hintText: "Enter Password",
           hintStyle: TextStyle(fontSize: 12),
@@ -662,9 +664,9 @@ class _EngineerCustomerRegistrationScreenState
         keyboardType: TextInputType.visiblePassword,
         obscureText: _hidePassword,
         decoration: InputDecoration(
-            contentPadding: const EdgeInsets.only(left: 0),
+            contentPadding: EdgeInsets.only(left: 0),
             hintText: "Enter Verify Password",
-            hintStyle: const TextStyle(fontSize: 12),
+            hintStyle: TextStyle(fontSize: 12),
             //labelText: "Verify Password",
 
             // border: InputBorder.none,
@@ -705,7 +707,7 @@ class _EngineerCustomerRegistrationScreenState
     return Scaffold(
       appBar: AppBar(
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(
+        systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light),
@@ -723,7 +725,7 @@ class _EngineerCustomerRegistrationScreenState
         //   ),
         // ),
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.keyboard_arrow_left,
             color: Colors.white,
             size: 40,
@@ -734,11 +736,11 @@ class _EngineerCustomerRegistrationScreenState
                 .push(MaterialPageRoute(builder: (context) => EngineerHome()));
           },
         ),
-        title: const Text(
+        title: Text(
           "Customer Registration",
           style: TextStyle(
               fontFamily: 'TimesNewRoman',
-              fontSize: 25,
+              fontSize: 30,
               fontWeight: FontWeight.w700,
               color: themWhiteColor),
         ),
@@ -785,8 +787,8 @@ class _EngineerCustomerRegistrationScreenState
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: Column(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, top: 20, bottom: 2),
                             child: Align(
                                 alignment: Alignment.topLeft,
@@ -831,14 +833,14 @@ class _EngineerCustomerRegistrationScreenState
                                   color: Colors.black54,
                                   size: 30,
                                 ),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.black54))),
 
                                 value: customerType_dropdown_id,
-                                hint: const Padding(
-                                  padding: EdgeInsets.only(left: 0),
+                                hint: Padding(
+                                  padding: const EdgeInsets.only(left: 0),
                                   child: Text('Please Choose Customer',
                                       style: TextStyle(
                                           fontFamily: 'RaleWay',
@@ -860,7 +862,7 @@ class _EngineerCustomerRegistrationScreenState
                                       padding: const EdgeInsets.only(left: 0),
                                       child: Text(
                                         list['typename'].toString(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Color(0xff454f63),
                                             fontWeight: FontWeight.w800,
                                             fontStyle: FontStyle.normal,
@@ -883,11 +885,11 @@ class _EngineerCustomerRegistrationScreenState
                               ),
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, top: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
@@ -901,18 +903,18 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            padding: EdgeInsets.only(left: 10, right: 10),
                             child: _buildCustomerName(),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
                           customerType_dropdown_id == "2"
                               ? Container(
                                   child: Column(
                                     children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
                                             left: 10, bottom: 0),
                                         child: Align(
                                             alignment: Alignment.topLeft,
@@ -926,19 +928,19 @@ class _EngineerCustomerRegistrationScreenState
                                             )),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(
+                                        padding: EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: _branchCode(),
                                       ),
                                     ],
                                   ),
                                 )
-                              : const Text(""),
-                          const SizedBox(
+                              : Text(""),
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -951,13 +953,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildContactPerson()),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -970,13 +972,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildEmail()),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -989,13 +991,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildContactNumber()),
-                          const SizedBox(
+                          SizedBox(
                             height: 10,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
@@ -1041,13 +1043,13 @@ class _EngineerCustomerRegistrationScreenState
                                   color: Colors.black54,
                                   size: 30,
                                 ),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.black54))),
                                 value: stateType_dropdown_id,
-                                hint: const Padding(
-                                  padding: EdgeInsets.only(left: 0),
+                                hint: Padding(
+                                  padding: const EdgeInsets.only(left: 0),
                                   child: Text('Please Choose State',
                                       style: TextStyle(
                                           fontFamily: 'RaleWay',
@@ -1075,7 +1077,7 @@ class _EngineerCustomerRegistrationScreenState
                                       padding: const EdgeInsets.only(left: 0),
                                       child: Text(
                                         list['statename'].toString(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Color(0xff454f63),
                                             fontWeight: FontWeight.w800,
                                             fontStyle: FontStyle.normal,
@@ -1087,11 +1089,11 @@ class _EngineerCustomerRegistrationScreenState
                               ),
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, top: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
@@ -1136,14 +1138,14 @@ class _EngineerCustomerRegistrationScreenState
                                   color: Colors.black54,
                                   size: 30,
                                 ),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.black54))),
 
                                 value: districtType_dropdown_id,
-                                hint: const Padding(
-                                  padding: EdgeInsets.only(left: 0),
+                                hint: Padding(
+                                  padding: const EdgeInsets.only(left: 0),
                                   child: Text('Please Choose District',
                                       style: TextStyle(
                                           fontFamily: 'RaleWay',
@@ -1175,7 +1177,7 @@ class _EngineerCustomerRegistrationScreenState
                                       padding: const EdgeInsets.only(left: 0),
                                       child: Text(
                                         list['districtname'].toString(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Color(0xff454f63),
                                             fontWeight: FontWeight.w800,
                                             fontStyle: FontStyle.normal,
@@ -1187,11 +1189,11 @@ class _EngineerCustomerRegistrationScreenState
                               ),
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                                 left: 10, top: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
@@ -1205,13 +1207,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildAddress()),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -1224,13 +1226,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildPinCode()),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 0),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -1243,13 +1245,13 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: _buildPassword()),
-                          const SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, bottom: 5),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -1262,7 +1264,7 @@ class _EngineerCustomerRegistrationScreenState
                                 )),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   left: 10, right: 10, bottom: 10),
                               child: _buildConfirmPassword()),
                         ],
@@ -1274,17 +1276,17 @@ class _EngineerCustomerRegistrationScreenState
                     height: height * 0.09,
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
+                        padding: EdgeInsets.only(bottom: 5, left: 5, right: 5),
                         child: SizedBox(
                           height: 50,
                           width: width,
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.only(top: 10),
                             child: ElevatedButton.icon(
-                                icon: const Icon(Icons.app_registration),
+                                icon: Icon(Icons.app_registration),
                                 label: FittedBox(
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       "Registration",
                                       style: TextStyle(
@@ -1328,7 +1330,7 @@ class _EngineerCustomerRegistrationScreenState
                                         Fluttertoast.showToast(
                                             msg: resMessage.toString(),
                                             toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
+                                            gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.green,
                                             textColor: Colors.white,
@@ -1350,7 +1352,7 @@ class _EngineerCustomerRegistrationScreenState
                                       Fluttertoast.showToast(
                                           msg: "Existing User",
                                           toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
+                                          gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.red,
                                           textColor: Colors.white,

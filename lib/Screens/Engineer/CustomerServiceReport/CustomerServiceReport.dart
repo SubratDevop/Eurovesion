@@ -2,20 +2,22 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/EngineerModel/CsrEntryModel.dart';
-import 'package:ev_testing_app/Model/EngineerModel/CustomerDetailsInCSRModel.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/EngineerModel/CsrEntryModel.dart';
+import 'package:eurovision/Model/EngineerModel/CustomerDetailsInCSRModel.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -98,6 +100,10 @@ class _CustomerServiceReportScreenState
   var csrresponseStatus;
   var csrresponseMsg;
   var selectedValue = -1;
+  var selectedSignMethod = -1;
+  bool isSigned = true;
+  Uint8List? imagebytes;
+  File? imageFile;
 
   List showCustomerDetailsList = [];
   var statusFalseresBody;
@@ -352,7 +358,7 @@ class _CustomerServiceReportScreenState
       Fluttertoast.showToast(
           msg: msg.toString(),
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white,
@@ -419,7 +425,7 @@ class _CustomerServiceReportScreenState
   //   }
   // }
   // }
-
+//!    //! handle Customer's mannual sign
   void _handleCustomerSignatureSaveButtonPressed() async {
     RenderSignaturePad boundary = customerSignatureGlobalKey.currentContext!
         .findRenderObject() as RenderSignaturePad;
@@ -478,6 +484,45 @@ class _CustomerServiceReportScreenState
     ));
   }
 
+  //! open Camera for Capture Customer Sign
+
+  void _openCamera() async {
+    final pickedFileCamera =
+        await ImagePicker().getImage(source: ImageSource.camera);
+    if (pickedFileCamera != null) {
+      setState(
+        () {
+          imageFile = File(pickedFileCamera.path);
+          print(imageFile.toString());
+        },
+      );
+
+      imagebytes = imageFile!.readAsBytesSync();
+      _handleCustomerSignatureBycamera(imagebytes);
+    }
+  }
+
+  //! handle customer Sign captured by Camera
+
+  void _handleCustomerSignatureBycamera(Uint8List? byte) async {
+    // RenderSignaturePad boundary = customerSignatureGlobalKey.currentContext!
+    //     .findRenderObject() as RenderSignaturePad;
+    // ui.Image image = await boundary.toImage();
+    // ByteData? byteData =
+    //     await (image.toByteData(format: ui.ImageByteFormat.png));
+
+    setState(() {
+      customerSignatureBytes = byte!.buffer.asUint8List();
+    });
+
+    if (customerSignatureBytes.toString() != null) {
+      scaffoldKey.currentState!.showSnackBar(
+          SnackBar(content: Text("Customer Signature Save Successfully")));
+    }
+
+    print("Customer signature ======= " + base64Encode(customerSignatureBytes));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -507,6 +552,142 @@ class _CustomerServiceReportScreenState
     _customerActionController.dispose();
   }
 
+  //! Show alert  SignPad
+  showAlertSignPad(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            height: 330,
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 450,
+                  child: SfSignaturePad(
+                      key: customerSignatureGlobalKey,
+                      backgroundColor: Colors.white,
+                      strokeColor: Colors.black,
+                      minimumStrokeWidth: 3.0,
+                      maximumStrokeWidth: 6.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  width: 450,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          primary: Colors.white,
+                          side: BorderSide(
+                              color: Colors.green, width: 1), 
+                        ),
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontFamily: 'TimesNewRoman',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),
+                        ),
+                        onPressed: () {
+                          _handleCustomerSignatureSaveButtonPressed();
+
+                          // showDialog(
+                          //   context: context,
+                          //   barrierDismissible: false,
+                          //   builder: (BuildContext context) {
+                          //     return CupertinoAlertDialog(
+                          //       title: Text("Warning",
+                          //           maxLines: 1,
+                          //           overflow: TextOverflow.ellipsis,
+                          //           style: TextStyle(
+                          //               fontFamily: 'RobotoMono',
+                          //               fontSize: 20,
+                          //               color: Colors.red)),
+                          //       actions: [
+                          //         CupertinoDialogAction(
+                          //           onPressed: () {
+                          //             _handleCustomerSignatureSaveButtonPressed();
+
+                          //             // Navigator.pop(context); //! worked
+                          //             // Navigator.of(context).pop(true);
+                          //             Navigator.of(context, rootNavigator: true)
+                          //                 .pop();
+                          //           },
+                          //           child: Text("Save"),
+                          //         ),
+                          //         CupertinoDialogAction(
+                          //             onPressed: () {
+                          //               Navigator.pop(context);
+                          //             },
+                          //             child: Text("Modify")),
+                          //       ],
+                          //       content: Text(
+                          //           "Signature cann't Modify After Save",
+                          //           maxLines: 2,
+                          //           overflow: TextOverflow.ellipsis,
+                          //           style: TextStyle(
+                          //               fontFamily: 'RobotoMono',
+                          //               fontSize: 20,
+                          //               color: Colors.black87)),
+                          //     );
+                          //   },
+                          // );
+
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      ),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          primary: Colors.white,
+                          side: BorderSide(color: Colors.red, width: 1),
+                        ),
+                        child: Text('Clear',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'TimesNewRoman',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20)),
+                        onPressed: _handleCustomerSignatureClearButtonPressed,
+                      ),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          primary: Colors.white,
+                          side: BorderSide(
+                              color: themBlueColor, width: 1), //<-- SEE HERE
+                        ),
+                        child: Text('Cancel',
+                            style: TextStyle(
+                                color: themBlueColor,
+                                fontFamily: 'TimesNewRoman',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20)),
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> _openStartTimePicker(BuildContext context) async {
@@ -529,7 +710,7 @@ class _CustomerServiceReportScreenState
       }
     }
 
-    ///////////// Start Date///////////////
+    //! Select Date
     DateTime currentDateOfChooseDate = DateTime.now();
     Future<void> _selectServiceDate(BuildContext context) async {
       final DateTime pickedDate = (await showDatePicker(
@@ -571,19 +752,21 @@ class _CustomerServiceReportScreenState
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.light),
-
-          backgroundColor: Colors.transparent,
+          backgroundColor: themBlueColor,
           toolbarHeight: height * 0.1,
           elevation: 0.0,
-          // title: Align(
-          //   alignment: Alignment.topLeft,
-          //   child: FittedBox(
-          //     child: Padding(
-          //       padding: const EdgeInsets.only(left: 10,top: 40),
-          //       child: Text("Login",style: TextStyle(fontFamily: 'AkayaKanadaka',fontSize: 60,fontWeight: FontWeight.w700,color: themWhiteColor),),
-          //     ),
-          //   ),
-          // ),
+          title: Center(
+            child: FittedBox(
+              child: Text(
+                'Customer Service Report',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'TimesNewRoman',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 30),
+              ),
+            ),
+          ),
           leading: IconButton(
             icon: Icon(
               Icons.keyboard_arrow_left,
@@ -595,30 +778,6 @@ class _CustomerServiceReportScreenState
               Navigator.of(context, rootNavigator: true).push(
                   MaterialPageRoute(builder: (context) => EngineerHome()));
             },
-          ),
-          flexibleSpace: ClipPath(
-            clipper: Customshape(),
-            child: Container(
-              //height: height*0.2,
-              width: MediaQuery.of(context).size.width,
-              color: themBlueColor,
-              child: Center(
-                child: FittedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      "Customer Service Report",
-                      // CustomerServiceReport.customeServiceStatus.toString(),
-                      style: TextStyle(
-                          fontFamily: 'AkayaKanadaka',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          color: themWhiteColor),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ),
         ),
         endDrawer: Container(
@@ -1580,11 +1739,7 @@ class _CustomerServiceReportScreenState
                         ),
                       ],
                     ),
-
-                    SizedBox(
-                      height: 5,
-                    ),
-
+//! Engineer Sign mannually
                     // engineerSignatureBytes.toString() != "null"
                     //     ? Row(
                     //         mainAxisAlignment: MainAxisAlignment.center,
@@ -1712,10 +1867,98 @@ class _CustomerServiceReportScreenState
                     //           ),
                     //         ],
                     //       ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: SizedBox(
+                          width: width,
+                          // height: 30,
+                          child: Text(
+                            "Customer Signature: ",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontFamily: 'RobotoMono',
+                                fontSize: 20,
+                                color: Colors.black87),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: RawMaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: themBlueColor, width: 1)),
+                              fillColor: selectedSignMethod == 1
+                                  ? themBlueColor
+                                  : themWhiteColor,
+                              child: Text(
+                                "Capture",
+                                style: TextStyle(
+                                    color: selectedSignMethod == 1
+                                        ? themWhiteColor
+                                        : themBlueColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  selectedSignMethod = 1;
+                                });
+                                //! open Cameara fujctionlaity
+                                _openCamera();
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: RawMaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: themBlueColor, width: 1)),
+                              fillColor: selectedSignMethod == 0
+                                  ? themBlueColor
+                                  : themWhiteColor,
+                              child: Text(
+                                "Sign",
+                                style: TextStyle(
+                                    color: selectedSignMethod == 0
+                                        ? themWhiteColor
+                                        : themBlueColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  selectedSignMethod = 0;
+
+                                  showAlertSignPad(context);
+                                });
+                                // showAlertSignPad(context);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
                     SizedBox(
                       height: 5,
                     ),
+//! mannual Customer Sign
 
                     customerSignatureBytes.toString() != "null"
                         ? Row(
@@ -1737,110 +1980,30 @@ class _CustomerServiceReportScreenState
                               )
                             ],
                           )
-                        : Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: SizedBox(
-                                    width: width,
-                                    // height: 30,
-                                    child: Text(
-                                      "Customer Signature: ",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontFamily: 'RobotoMono',
-                                          fontSize: 20,
-                                          color: Colors.black87),
-                                    )),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Container(
-                                      child: SfSignaturePad(
-                                          key: customerSignatureGlobalKey,
-                                          backgroundColor: Colors.white,
-                                          strokeColor: Colors.black,
-                                          minimumStrokeWidth: 3.0,
-                                          maximumStrokeWidth: 6.0),
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey)))),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                      child: Text(
-                                        'Save',
-                                        style: TextStyle(
-                                            fontFamily: 'AkayaKanadaka',
-                                            fontSize: 20,
-                                            color: themBlueColor,
-                                            fontWeight: FontWeight.w800),
-                                      ),
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return CupertinoAlertDialog(
-                                                title: Text("Warning",
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            'RobotoMono',
-                                                        fontSize: 20,
-                                                        color: Colors.red)),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                      onPressed: () {
-                                                        _handleCustomerSignatureSaveButtonPressed();
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text("Save")),
-                                                  CupertinoDialogAction(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text("Modify")),
-                                                ],
-                                                content: Text(
-                                                    "Signature cann't Modify After Save",
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            'RobotoMono',
-                                                        fontSize: 20,
-                                                        color: Colors.black87)),
-                                              );
-                                            });
-                                      }),
-                                  TextButton(
-                                    child: Text('Clear',
-                                        style: TextStyle(
-                                            fontFamily: 'AkayaKanadaka',
-                                            fontSize: 20,
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.w800)),
-                                    onPressed:
-                                        _handleCustomerSignatureClearButtonPressed,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-
+                        : Container(),
+//! Complain Status
                     SizedBox(
                       height: 5,
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: SizedBox(
+                          width: width,
+                          // height: 30,
+                          child: Text(
+                            "Complain Status: ",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontFamily: 'RobotoMono',
+                                fontSize: 20,
+                                color: Colors.black87),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -1909,6 +2072,10 @@ class _CustomerServiceReportScreenState
                                   scaffoldKey.currentState!.showSnackBar(SnackBar(
                                       content: Text(
                                           "Please Provide Complain Status")));
+                                } else if (selectedSignMethod == -1) {
+                                  scaffoldKey.currentState!.showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Customer signature is required ")));
                                 } else if (customerSignatureBytes.toString() ==
                                     "null") {
                                   scaffoldKey.currentState!.showSnackBar(
@@ -1931,7 +2098,7 @@ class _CustomerServiceReportScreenState
                                     Fluttertoast.showToast(
                                         msg: msg.toString(),
                                         toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
+                                        gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.green,
                                         textColor: Colors.white,
@@ -1945,28 +2112,26 @@ class _CustomerServiceReportScreenState
                                     Future.delayed(const Duration(seconds: 3),
                                         () {
                                       setState(() {
-
                                         Fluttertoast.showToast(
                                             msg: msg.toString(),
                                             toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
+                                            gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.green,
                                             textColor: Colors.white,
                                             fontSize: 16.0);
-                                            
+
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .push(MaterialPageRoute(
                                                 builder: (context) =>
                                                     EngineerHome()));
-                                        
                                       });
                                     });
                                     Fluttertoast.showToast(
                                         msg: msg.toString(),
                                         toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
+                                        gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.green,
                                         textColor: Colors.white,
@@ -1981,7 +2146,7 @@ class _CustomerServiceReportScreenState
                                   //   Fluttertoast.showToast(
                                   //       msg: msg.toString(),
                                   //       toastLength: Toast.LENGTH_SHORT,
-                                  //       gravity: ToastGravity.BOTTOM,
+                                  //       gravity: ToastGravity.CENTER,
                                   //       timeInSecForIosWeb: 1,
                                   //       backgroundColor: Colors.green,
                                   //       textColor: Colors.white,
@@ -2063,25 +2228,3 @@ class _CustomerServiceReportScreenState
     );
   }
 }
-
-// signingConfigs {
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//            shrinkResources false
-//            minifyEnabled false
-//        }
-//  }
-
-// TextStyle(
-//                                         fontFamily: 'RobotoMono',
-//                                         fontSize: 15,
-//                                         color: Colors.black87,
-//                                         fontWeight: FontWeight.bold)

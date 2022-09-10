@@ -1,8 +1,9 @@
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:ev_testing_app/Screens/Customer/CustomeItems/CustomerItems.dart';
+import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
+import 'package:eurovision/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
@@ -83,7 +84,7 @@ class _CustomerItelListPdfViewState extends State<CustomerItelListPdfView> {
           
           endDrawer: Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              child: EngineerDrawer()),
+              child: CustomerDrawer()),
           body: Center(
             child: PDF(
               swipeHorizontal: true,
@@ -120,10 +121,10 @@ class _CustomerItelListPdfViewState extends State<CustomerItelListPdfView> {
 
 
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-// import 'package:ev_testing_app/Screens/Customer/CustomeItems/CustomerItems.dart';
+// import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
 // import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
-// import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-// import 'package:ev_testing_app/constants/constants.dart';
+// import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+// import 'package:eurovision/constants/constants.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';

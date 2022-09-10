@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/Model/EngineerModel/EngineerAssignmentModel.dart';
-import 'package:ev_testing_app/Screens/Engineer/CustomerServiceReport/CustomerServiceReport.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/Model/EngineerModel/EngineerAssignmentModel.dart';
+import 'package:eurovision/Screens/Engineer/CustomerServiceReport/CustomerServiceReport.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +89,9 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         initialDate: currentDate_start,
         firstDate: DateTime(2015),
         lastDate: DateTime(2050)))!;
-    if (pickedDate != null && pickedDate != currentDate_start)
+    SharedPreferences engPrefs = await SharedPreferences.getInstance();
+
+    if (pickedDate != currentDate_start)
       setState(() {
         currentDate_start =
             pickedDate; // change current state value to picked value
@@ -104,10 +106,13 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         var formate2 =
             "${dateTime.month}/${dateTime.day}/${dateTime.year}"; //change format t0 yyy-mm-dd
 
-        date = formate1.toString();
-        sendingDateToServer = formate2.toString();
+        // date = formate1.toString();
+        date = formate2.toString();
 
-        showingAssignmentProcess();
+        sendingDateToServer = formate2.toString();
+        engPrefs.setString("selectedDate", sendingDateToServer!);
+        showingAssignmentProcess(sendingDateToServer!);
+        prvsDate = sendingDateToServer.toString();
 
         print("start date  " + date.toString());
         print("Sending date " + sendingDateToServer.toString());
@@ -126,76 +131,18 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   String? gotValue;
   int? noOfAssign;
 
-  Future<EngineerAssignmentModel> showingAssignmentProcess12() async {
+  Future<EngineerAssignmentModel> showingAssignmentProcess(String selectedDate) async {
+    print("showingAssignmentProcess called");
     SharedPreferences engPrefs = await SharedPreferences.getInstance();
 
-    print("engineerid " + EngineerHome.engId.toString());
-    print("engineerDecryptid " + EngineerHome.engDecryptId.toString());
-    print("token " + EngineerHome.engToken.toString());
-
-    String assignment_url = engineerAssignmentApi;
-
-    final http.Response response = await http.post(
-      Uri.parse(assignment_url),
-      headers: <String, String>{
-        // 'Accept': 'application/json',
-        // 'Content-type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: {
-        "engineerid": EngineerHome.engId.toString(),
-        "token": engPrefs.getString("token"),
-        // "date": sendingDateToServer.toString()
-        // "data":null
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print("res" + response.body);
-      // choseDate = sendingDateToServer.toString();
-
-      setState(() {
-        status = json.decode(response.body)['status'];
-      });
-
-      print("main status " + status.toString());
-
-      if (status == true) {
-        var itemList = json.decode(response.body)['data'] ?? [];
-
-        print("item list " + itemList.toString());
-        setState(() {
-          gotValue = "done";
-          showAssignmentList = itemList;
-          noOfAssign = showAssignmentList.length;
-        });
-      } else {
-        setState(() {
-          gotValue = "not done";
-          noOfAssign = 0;
-        });
-      }
-
-      // if (status == false) {
-      //   setState(() {
-      //     gotValue = "not done";
-      //   });
-      // } else {
-      //   // Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>NoCompletedComplain()));
-
-      // }
-      return EngineerAssignmentModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to create album.');
-    }
-  }
-
-  Future<EngineerAssignmentModel> showingAssignmentProcess() async {
-    print("showingAssignmentProcess called");
+    String? engToken = engPrefs.getString("token");
+    String? engId = engPrefs.getString("engineerId");
 
     print("engineerid " + EngineerHome.engId.toString());
-    print("token " + EngineerHome.engToken.toString());
-    print("date " + sendingDateToServer.toString());
+    print("engid " + engToken.toString());
+    print("token ***" + EngineerHome.engToken.toString());
+    print("engToken ***" + engToken.toString());
+    print("date " + selectedDate.toString()); //! 8/13/2022
     // print("date " + dateToServer.toString());
 
     String assignment_url = engineerAssignmentApi;
@@ -208,9 +155,12 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         'Accept': 'application/json'
       },
       body: {
+        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:kK/YaLA5VPkNcD4tDLQKkw==:AAAAAAAAAAAAAAAAAAAAAA==
         "engineerid": EngineerHome.engId.toString(),
-        "token": EngineerHome.engToken.toString(),
-        "date": sendingDateToServer.toString()
+        "token": EngineerHome.engToken
+            .toString(), //z4GP2JA9kqW6mw/M8i9B4wzFS1wXIZg3d7axBrAuhqU=
+        // "date": sendingDateToServer.toString()
+        "date": selectedDate.toString() //! 8/19/2022
         // "date": dateToServer
         // "data":null
       },
@@ -349,20 +299,21 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
 // return statusResponse;
 // }
 
-  Future<String> getToken() async {
-    print("???????????????????????????????????????????");
+  // Future<String> getToken() async {
+  //   print("???????????????????????????????????????????");
 
-    SharedPreferences engPrefs = await SharedPreferences.getInstance();
-    print("updated token init State");
-    String token = engPrefs.getString("token")!;
-    print(token);
-    print("updated token init Stae");
+  //   SharedPreferences engPrefs = await SharedPreferences.getInstance();
+  //   print("updated token init State");
+  //   String token = engPrefs.getString("token")!;
+  //   print(token);
+  //   print("updated token init Stae");
 
-    print("???????????????????????????????????????????");
+  //   print("???????????????????????????????????????????");
 
-    return token;
-  }
+  //   return token;
+  // }
 
+  String? today;
   @override
   void initState() {
     // TODO: implement initState
@@ -370,37 +321,35 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
     var now = DateTime.now();
     // final DateFormat formatter = DateFormat('dd/MM/yyyy');
     // String createDate = formatter.format(DateTime.now());
-    String createDate = "${now.day}/${now.month}/${now.year}";
+    today = "${now.month}/${now.day}/${now.year}";
+    print(today);
     // DateFormat.yMd('es').format(now);
     // _selectStartDate(context);
-    date = createDate;
+    showingCSrList();
     chooseDate = "";
-    // showingAssignmentProcess12();
-
-//     print("???????????????????????????????????????????");
-
-//  SharedPreferences engPrefs = await SharedPreferences.getInstance();
-//  print("updated token init State");
-//  String token =  engPrefs.getString("token")!;
-//  print(token);
-//  print("updated token init Stae");
-
-// print("???????????????????????????????????????????");
-
-// var dateString = DateFormat('dd-MM-yyyy').format(now);
-
+    print("token ***" + EngineerHome.engToken.toString());
     getLoginCredentials();
-    showingAssignmentProcess12();
+
     greetingMessage();
     upDateGreetingMessageAccordingToTime();
-    // showingAssignmentProcess(createDate);
+  }
 
-    // choseDate = sendingDateToServer.toString();
-    // tempAssignmentList = showAssignmentList;
-    print("eng token init >>>>>>>>" +
-        EngineerHome.engToken.toString()); // previos token hitted at first
-    print("Assignment list screen called");
-// chooseDateStatus = status;
+  var formate1;
+  //! Showing eng. CSR list assigned by Customer
+  var prvsDate;
+  Future showingCSrList() async {
+    SharedPreferences engPrefs = await SharedPreferences.getInstance();
+    prvsDate = engPrefs.getString("selectedDate") ?? today.toString();
+    print("Previous Date = $prvsDate");
+    showingAssignmentProcess(prvsDate);
+  }
+
+  //! refrsh for loading  if new Csr assigned
+  Future loadingCsr() async {
+    setState(() {
+      showAssignmentList.clear();
+    });
+    showingAssignmentProcess(prvsDate);
   }
 
   @override
@@ -410,15 +359,12 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    // _selectStartDate(context);
-    /// screen Orientation end///////////
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: themWhiteColor,
-
       appBar: AppBar(
         backwardsCompatibility: false,
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -538,7 +484,11 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                   ),
                 ),
                 Text(
-                  date.toString(),
+                  prvsDate.toString(),
+                  // date.toString() == "null"
+                  //         ? today.toString()
+                  //         : prvsDate.toString(),
+                  // date.toString(),
                   style: TextStyle(
                       fontFamily: 'Righteous',
                       fontSize: 18,
@@ -555,190 +505,242 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
               width: width,
               height: height * 0.75,
               child: gotValue == "done"
-                  ? ListView.builder(
-                      itemCount: showAssignmentList.length,
-                      itemBuilder: (context, index) {
-                        csrStatus = showAssignmentList[index]["csr_status"];
-                        return ListTile(
-                          onTap: () {
-                            print("Card tapped");
-                            // EngineerHome.asign_list_id = AesEncryption.encryptAES(showAssignmentList[index]['id'].toString());
-                            EngineerHome.complain_id = AesEncryption.encryptAES(showAssignmentList[index]['complainid'].toString());
-                            // // EngineerHome.complain_id = int.parse(showAssignmentList[index]['complainid']);
-                            // print(EngineerHome.engDecryptId);
-                            // csrStatus =
-                            //     showAssignmentList[index]["csr_status"];
-                            //! Navigate to CSR report Screen
-                            Navigator.of(context, rootNavigator: true).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CustomerServiceReport()));
+                  ? showAssignmentList.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: themBlueColor,
+                          ),
+                        )
+                      : RefreshIndicator(
+                        color: themBlueColor,
+                          onRefresh: loadingCsr,
+                          child: ListView.builder(
+                              itemCount: showAssignmentList.length,
+                              itemBuilder: (context, index) {
+                                csrStatus =
+                                    showAssignmentList[index]["csr_status"];
+                                print(csrStatus);
+                                return ListTile(
+                                  onTap: () {
+                                    print("Card tapped");
+                                    // EngineerHome.asign_list_id = AesEncryption.encryptAES(showAssignmentList[index]['id'].toString());
+                                    EngineerHome.complain_id =
+                                        AesEncryption.encryptAES(
+                                            showAssignmentList[index]
+                                                    ['complainid']
+                                                .toString());
+                                    // // EngineerHome.complain_id = int.parse(showAssignmentList[index]['complainid']);
+                                    // print(EngineerHome.engDecryptId);
+                                    // csrStatus =
+                                    //     showAssignmentList[index]["csr_status"];
 
-                            //!  Navigate to  CSR Web Screen
-                            // setState(() {
-                            // if (csrStatus == true) {
-                            //   // print("Csr Already Assigned");
-                            //   showCSsrReportedDialog(context);
-                            // } else {
-                            //   Navigator.of(context, rootNavigator: true)
-                            //       .push(MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               CsrWebScreen()));
+                                    csrStatus =
+                                        showAssignmentList[index]["csr_status"];
 
-                            //   print("Csr web Screen naviagtion Stared");
-                            // }
-                            // });
+                                    //!  Navigate to  CSR Web Screen
+                                    setState(() {
+                                      if (csrStatus == true) {
+                                        // print("Csr Already Assigned");
+                                        showCSsrReportedDialog(context);
+                                      } else {
+                                        //! Navigate to CSR report Screen
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CustomerServiceReport()));
+                                      }
+                                      // else {
+                                      //   Navigator.of(context, rootNavigator: true)
+                                      //       .push(MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               CsrWebScreen()));
 
-                            // if (status == true) {
-                            //   setState(() {});
-                            //   EngineerHome.asign_list_id =
-                            //       AesEncryption.encryptAES(
-                            //           showAssignmentList[index]['id']
-                            //               .toString());
-                            //   EngineerHome.complain_id =
-                            //       showAssignmentList[index]['complainid']
-                            //           .toString();
-                            //   // EngineerHome.complain_id = int.parse(showAssignmentList[index]['complainid']);
-                            //   print(EngineerHome.engDecryptId);
-                            //   csrStatus =
-                            //       showAssignmentList[index]["csr_status"];
-                            //   Navigator.of(context, rootNavigator: true).push(
-                            //       MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               CustomerServiceReport()));
-                            // } else {
-                            //   print("not navigated");
-                            // }
-                          },
-                          title: Container(
-                            height: height * 0.15,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: csrStatus == true
-                                  ? themBlueColor.withOpacity(0.8)
-                                  : themWhiteColor,
-                              elevation: 10,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    ListTile(
-                                      leading: Image.asset(
-                                        "assets/images/complain_icon.png",
-                                        height: 80,
-                                        width: 60,
-                                        color: csrStatus == true
-                                            ? themWhiteColor
-                                            : Colors.black45,
+                                      //   print("Csr web Screen naviagtion Stared");
+                                      // }
+                                    });
+
+                                    // if (status == true) {
+                                    //   setState(() {});
+                                    //   EngineerHome.asign_list_id =
+                                    //       AesEncryption.encryptAES(
+                                    //           showAssignmentList[index]['id']
+                                    //               .toString());
+                                    //   EngineerHome.complain_id =
+                                    //       showAssignmentList[index]['complainid']
+                                    //           .toString();
+                                    //   // EngineerHome.complain_id = int.parse(showAssignmentList[index]['complainid']);
+                                    //   print(EngineerHome.engDecryptId);
+                                    //   csrStatus =
+                                    //       showAssignmentList[index]["csr_status"];
+                                    //   Navigator.of(context, rootNavigator: true).push(
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               CustomerServiceReport()));
+                                    // } else {
+                                    //   print("not navigated");
+                                    // }
+                                  },
+                                  title: Container(
+                                    height: height * 0.15,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
-                                      title: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
+                                      color: csrStatus == true
+                                          ? themBlueColor.withOpacity(0.8)
+                                          : themWhiteColor,
+                                      elevation: 10,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              leading: Image.asset(
+                                                "assets/images/complain_icon.png",
+                                                height: 80,
+                                                width: 60,
+                                                color: csrStatus == true
+                                                    ? themWhiteColor
+                                                    : Colors.black45,
+                                              ),
+                                              title: Column(
                                                 children: [
-                                                  Icon(Icons.calendar_today,
-                                                      color: csrStatus == true
-                                                          ? themWhiteColor
-                                                          : Colors.black45),
-                                                  Text(
-                                                    showAssignmentList[index]
-                                                            ['complaindate']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontFamily: 'Righteous',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: csrStatus == true
-                                                            ? themWhiteColor
-                                                            : Colors.black45),
-                                                  )
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .calendar_today,
+                                                              color: csrStatus ==
+                                                                      true
+                                                                  ? themWhiteColor
+                                                                  : Colors
+                                                                      .black45),
+                                                          Text(
+                                                            showAssignmentList[
+                                                                        index][
+                                                                    'complaindate']
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Righteous',
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: csrStatus ==
+                                                                        true
+                                                                    ? themWhiteColor
+                                                                    : Colors
+                                                                        .black45),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .calendar_today,
+                                                            color: csrStatus ==
+                                                                    true
+                                                                ? themWhiteColor
+                                                                : Colors
+                                                                    .black45,
+                                                          ),
+                                                          Text(
+                                                            showAssignmentList[
+                                                                        index][
+                                                                    'assignedfordate']
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Righteous',
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: csrStatus ==
+                                                                        true
+                                                                    ? themWhiteColor
+                                                                    : Colors
+                                                                        .black45),
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      FittedBox(
+                                                          child: Text(
+                                                        showAssignmentList[
+                                                                    index][
+                                                                'complaintnumber']
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                'Righteous',
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: csrStatus ==
+                                                                    true
+                                                                ? themWhiteColor
+                                                                : Colors
+                                                                    .black54),
+                                                      ))
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        width: 200,
+                                                        child: Text(
+                                                          showAssignmentList[
+                                                                      index][
+                                                                  'complainttext']
+                                                              .toString(),
+                                                          // maxLines: 2,//3
+                                                          overflow:
+                                                              TextOverflow.fade,
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Righteous',
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                              color: csrStatus ==
+                                                                      true
+                                                                  ? themWhiteColor
+                                                                  : Colors
+                                                                      .black87),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.calendar_today,
-                                                    color: csrStatus == true
-                                                        ? themWhiteColor
-                                                        : Colors.black45,
-                                                  ),
-                                                  Text(
-                                                    showAssignmentList[index]
-                                                            ['assignedfordate']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontFamily: 'Righteous',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: csrStatus == true
-                                                            ? themWhiteColor
-                                                            : Colors.black45),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            children: [
-                                              FittedBox(
-                                                  child: Text(
-                                                showAssignmentList[index]
-                                                        ['complaintnumber']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontFamily: 'Righteous',
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: csrStatus == true
-                                                        ? themWhiteColor
-                                                        : Colors.black54),
-                                              ))
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                width: 200,
-                                                child: Text(
-                                                  showAssignmentList[index]
-                                                          ['complainttext']
-                                                      .toString(),
-                                                  // maxLines: 2,//3
-                                                  overflow: TextOverflow.fade,
-                                                  style: TextStyle(
-                                                      fontFamily: 'Righteous',
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w900,
-                                                      color: csrStatus == true
-                                                          ? themWhiteColor
-                                                          : Colors.black87),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          // ),
-                        );
-                      })
+                                  ),
+                                  // ),
+                                );
+                              }),
+                        )
                   : Center(
                       child: FittedBox(
                         child: Padding(

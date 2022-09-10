@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ev_testing_app/Model/EngineerModel/EngineerProfileEdit.dart';
-import 'package:ev_testing_app/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
-import 'package:ev_testing_app/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:ev_testing_app/Screens/Engineer/Profile/EngineerProfile.dart';
-import 'package:ev_testing_app/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
+import 'package:eurovision/Model/EngineerModel/EngineerProfileEdit.dart';
+import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
+import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
+import 'package:eurovision/Screens/Engineer/Profile/EngineerProfile.dart';
+import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -139,7 +139,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
       // Fluttertoast.showToast(
       //   msg: "Existing Customer",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.red,
       //   textColor: Colors.white,
@@ -586,9 +586,9 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
                                 Fluttertoast.showToast(
                                   msg: resMessage.toString(),
                                   toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
+                                  gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: themeToastColor,
+                                  backgroundColor: Colors.green,
                                   textColor: Colors.white,
                                   fontSize: 16.0
                                 );
@@ -616,7 +616,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
                                   // Fluttertoast.showToast(
                                   //  msg: "not sufficient",
                                   //   toastLength: Toast.LENGTH_SHORT,
-                                  //   gravity: ToastGravity.BOTTOM,
+                                  //   gravity: ToastGravity.CENTER,
                                   //   timeInSecForIosWeb: 1,
                                   //   backgroundColor: Colors.red,
                                   //   textColor: Colors.white,

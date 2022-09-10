@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:ev_testing_app/AES256encryption/Encrypted.dart';
-import 'package:ev_testing_app/Api/Api.dart';
-import 'package:ev_testing_app/CustomShape/CustomAppBarShape/Customshape.dart';
-import 'package:ev_testing_app/Model/EngineerModel/EngineerPasswordReSetModel.dart';
-import 'package:ev_testing_app/Screens/Engineer/ForgotPassword/EngineerOtpVerify.dart';
-import 'package:ev_testing_app/Screens/Engineer/ForgotPassword/EngineerVerify.dart';
-import 'package:ev_testing_app/Screens/Engineer/Login/EngineerLogin.dart';
-import 'package:ev_testing_app/constants/constants.dart';
+import 'package:eurovision/AES256encryption/Encrypted.dart';
+import 'package:eurovision/Api/Api.dart';
+import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
+import 'package:eurovision/Model/EngineerModel/EngineerPasswordReSetModel.dart';
+import 'package:eurovision/Screens/Engineer/ForgotPassword/EngineerOtpVerify.dart';
+import 'package:eurovision/Screens/Engineer/ForgotPassword/EngineerVerify.dart';
+import 'package:eurovision/Screens/Engineer/Login/EngineerLogin.dart';
+import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -95,7 +95,7 @@ class _EngineerPasswordReSetScreenState extends State<EngineerPasswordReSetScree
       // Fluttertoast.showToast(
       //   msg: "Please fill Up All Details",
       //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
+      //   gravity: ToastGravity.CENTER,
       //   timeInSecForIosWeb: 1,
       //   backgroundColor: Colors.green,
       //   textColor: Colors.white,
@@ -241,7 +241,7 @@ class _EngineerPasswordReSetScreenState extends State<EngineerPasswordReSetScree
               Fluttertoast.showToast(
                 msg: message.toString(),
                 toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
+                gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
@@ -257,7 +257,7 @@ class _EngineerPasswordReSetScreenState extends State<EngineerPasswordReSetScree
               Fluttertoast.showToast(
                 msg: message.toString(),
                 toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
+                gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
