@@ -178,7 +178,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -227,7 +227,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: SingleChildScrollView(
@@ -512,7 +512,8 @@ class _WelComeScreenState extends State<WelComeScreen> {
               padding: EdgeInsets.only(left: 1, bottom: 2),
               child: Text(
                 "Buy\nNow",
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold,
+                color: Colors.white),
               )),
         ),
       ),

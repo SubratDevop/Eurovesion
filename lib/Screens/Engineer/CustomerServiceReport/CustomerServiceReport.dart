@@ -390,7 +390,7 @@ class _CustomerServiceReportScreenState
   // });
 
   // if (engineerSignatureBytes.toString() != null) {
-  //   scaffoldKey.currentState!.showSnackBar(
+  //   ScaffoldMessenger.of(context).showSnackBar(
   //       SnackBar(content: Text("Engineer Signature Save Successfully")));
   // }
 
@@ -442,7 +442,7 @@ class _CustomerServiceReportScreenState
     });
 
     if (customerSignatureBytes.toString() != null) {
-      scaffoldKey.currentState!.showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Customer Signature Save Successfully")));
     }
 
@@ -516,7 +516,7 @@ class _CustomerServiceReportScreenState
     });
 
     if (customerSignatureBytes.toString() != null) {
-      scaffoldKey.currentState!.showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Customer Signature Save Successfully")));
     }
 
@@ -747,7 +747,7 @@ class _CustomerServiceReportScreenState
         key: scaffoldKey,
         backgroundColor: themWhiteColor,
         appBar: AppBar(
-          backwardsCompatibility: false,
+           
           systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
@@ -2054,31 +2054,31 @@ class _CustomerServiceReportScreenState
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
                                 if (_selectedStartTime == "Click here") {
-                                  scaffoldKey.currentState!.showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               "Please Choose Start Time")));
                                 } else if (_selectedEndTime == "Click here") {
-                                  scaffoldKey.currentState!.showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content:
                                               Text("Please Choose End Time")));
                                 } else if (showingOnServiceeDate ==
                                     "Choose Date") {
-                                  scaffoldKey.currentState!.showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text("Please Choose Date")));
                                 } else if (selectedValue == -1) {
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                       content: Text(
                                           "Please Provide Complain Status")));
                                 } else if (selectedSignMethod == -1) {
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                       content: Text(
                                           "Customer signature is required ")));
                                 } else if (customerSignatureBytes.toString() ==
                                     "null") {
-                                  scaffoldKey.currentState!.showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               "Please Put Customer Signature")));
@@ -2153,7 +2153,7 @@ class _CustomerServiceReportScreenState
                                   //       fontSize: 16.0);
                                 }
                                 // catch (e) {
-                                //   scaffoldKey.currentState!.showSnackBar(
+                                //   ScaffoldMessenger.of(context).showSnackBar(
                                 //       SnackBar(
                                 //           content: Text(msg.toString())));
                                 // }
@@ -2163,7 +2163,7 @@ class _CustomerServiceReportScreenState
                             }
                             //  else {
 
-                            //   scaffoldKey.currentState!.showSnackBar(
+                            //   ScaffoldMessenger.of(context).showSnackBar(
                             //       SnackBar(
                             //           content: Text(
                             //               "Please Enter Essential Fields")));

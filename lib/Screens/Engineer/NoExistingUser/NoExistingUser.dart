@@ -71,7 +71,7 @@ class _NoExistingUserScreenState extends State<NoExistingUserScreen> {
 
       body:  NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Container(

@@ -110,7 +110,7 @@ class _CustomerServiceReportListScreenState extends State<CustomerServiceReportL
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

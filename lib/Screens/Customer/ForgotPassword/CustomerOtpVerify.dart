@@ -347,7 +347,7 @@ class _CustomerOtpVerifyScreenState extends State<CustomerOtpVerifyScreen> {
       
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

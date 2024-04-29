@@ -291,7 +291,7 @@ class _CustomerPasswordReSetScreenState extends State<CustomerPasswordReSetScree
       backgroundColor: themWhiteColor,
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

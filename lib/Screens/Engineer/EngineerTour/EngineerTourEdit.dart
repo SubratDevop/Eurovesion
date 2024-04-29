@@ -86,7 +86,7 @@ class _EngineerTourEditScreenState extends State<EngineerTourEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,

@@ -375,7 +375,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
       key: scaffoldKey,
       backgroundColor: themWhiteColor,
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -410,7 +410,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
           child: CustomerDrawer()),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(
@@ -667,7 +667,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
 
                                   // if(passwordController.text.toString()==confirmPasswordController.text.toString()){
 
-                                  scaffoldKey.currentState!.showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               "Sorry Cann't Update Profile"

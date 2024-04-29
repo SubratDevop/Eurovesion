@@ -181,7 +181,7 @@ class _CusstmerCSRViewScreenState extends State<CusstmerCSRViewScreen> {
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         // automaticallyImplyLeading: true,
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -244,7 +244,7 @@ class _CusstmerCSRViewScreenState extends State<CusstmerCSRViewScreen> {
           child: CustomerDrawer()),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Column(

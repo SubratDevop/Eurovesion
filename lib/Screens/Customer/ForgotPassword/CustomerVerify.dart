@@ -265,7 +265,7 @@ class _CustomerVerifyScreenState extends State<CustomerVerifyScreen> {
 
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -305,7 +305,7 @@ class _CustomerVerifyScreenState extends State<CustomerVerifyScreen> {
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(

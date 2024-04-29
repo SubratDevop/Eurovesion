@@ -102,7 +102,7 @@ class _CustomerItemsScreenState extends State<CustomerItemsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -137,7 +137,7 @@ class _CustomerItemsScreenState extends State<CustomerItemsScreen> {
           child: CustomerDrawer()),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Column(

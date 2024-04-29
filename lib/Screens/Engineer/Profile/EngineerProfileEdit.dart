@@ -375,7 +375,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
 
        appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: themBlueColor,
         statusBarBrightness: Brightness.light,
@@ -401,7 +401,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
       
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Form(
@@ -609,7 +609,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
                 
                                   // if(passwordController.text.toString()==confirmPasswordController.text.toString()){
                 
-                                   // scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Sorry Cann't Update Profile".toString()))); 
+                                   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Sorry Cann't Update Profile".toString()))); 
                                 //  }  
                 
                                 //  Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=> ExistingUser()));

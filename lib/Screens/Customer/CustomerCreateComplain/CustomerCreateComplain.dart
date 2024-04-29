@@ -196,7 +196,7 @@ class _CustomerComplainScreenState extends State<CustomerComplainScreen> {
       key: scaffoldKey,
 
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -246,7 +246,7 @@ class _CustomerComplainScreenState extends State<CustomerComplainScreen> {
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: SingleChildScrollView(
@@ -468,7 +468,7 @@ class _CustomerComplainScreenState extends State<CustomerComplainScreen> {
                                       
                                     }
                                   } catch (e) {
-                                    scaffoldKey.currentState!.showSnackBar(
+                                    ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             content: Text(
                                                 " Sorry can't placed a complain"

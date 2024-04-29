@@ -295,7 +295,7 @@ class _EngineerPasswordReSetScreenState extends State<EngineerPasswordReSetScree
       backgroundColor: themWhiteColor,
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

@@ -56,7 +56,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (overscroll) {
-        overscroll.disallowGlow();
+        overscroll.disallowIndicator();
         return false;
       },
       child: Container(

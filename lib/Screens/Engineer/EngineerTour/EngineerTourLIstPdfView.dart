@@ -84,7 +84,7 @@ class _EngineerTourLIstPdfViewScreenState extends State<EngineerTourLIstPdfViewS
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

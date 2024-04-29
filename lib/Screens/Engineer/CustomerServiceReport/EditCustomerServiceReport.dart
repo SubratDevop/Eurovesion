@@ -315,7 +315,7 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
     
 
     if(engineerSignatureBytes.toString()!=null){
-      scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Engineer Signature Save Successfully"))); 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Engineer Signature Save Successfully"))); 
     }
     
     print("eng signature"+base64Encode(engineerSignatureBytes));
@@ -365,7 +365,7 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
     
 
     if(customerSignatureBytes.toString()!=null){
-      scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Customer Signature Save Successfully"))); 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Customer Signature Save Successfully"))); 
     }
     
 
@@ -495,7 +495,7 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
       
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -1614,31 +1614,31 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
 
                                 if(_selectedStartTime=="Click here"){
 
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Choose Start Time"))); 
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Choose Start Time"))); 
 
                                 }
 
                                 else if(_selectedEndTime=="Click here"){
 
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Choose Finish Time"))); 
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Choose Finish Time"))); 
 
                                 }
 
                                 else if(showingOnServiceeDate=="Choose Date"){
 
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Choose Date"))); 
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Choose Date"))); 
                                   
                                 }
 
                                 // else if(engineerSignatureBytes.toString()=="null"){
 
-                                //   scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Put Engineer Signature"))); 
+                                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Put Engineer Signature"))); 
                                   
                                 // }
 
                                 else if(customerSignatureBytes.toString()=="null"){
 
-                                  scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Put Customer Signature"))); 
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Put Customer Signature"))); 
                                   
                                 }
 
@@ -1680,7 +1680,7 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
                                 
                   
                                   }catch(e){
-                                    scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please wait for image"))); 
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please wait for image"))); 
                                   }
 
                                 }
@@ -1689,7 +1689,7 @@ class _EditCustomerServiceReportScreenState extends State<EditCustomerServiceRep
                               } 
 
                               else{
-                                scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("Please Enter Essential Fields"))); 
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Please Enter Essential Fields"))); 
                               }    
                               
                             }, 

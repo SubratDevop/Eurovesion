@@ -81,7 +81,7 @@ class _CustomerServiceReportPdfViewScreenState extends State<CustomerServiceRepo
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

@@ -1,6 +1,7 @@
+// ignore_for_file: unused_field
+
 import 'dart:convert';
 import 'package:eurovision/Api/Api.dart';
-import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
 import 'package:eurovision/Model/CustomerModel/CustomerItemsModel.dart';
 import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
 import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
@@ -39,7 +40,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   // global key for form.
   bool _autovalidate = false;
-  bool _isVisible = false;
   String? selectComplainType;
   String? selectItemForComplainType;
   String? partsValue, msg;
@@ -118,7 +118,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
       String installationDate) async {
     String customerMachineRegistrationUrl = customerMachineRegistrationApi;
 
-    bool resStatus;
     final http.Response response = await http.post(
       Uri.parse(customerMachineRegistrationUrl),
       headers: <String, String>{
@@ -229,7 +228,7 @@ print(CustomerHome.customerToken.toString());
         initialDate: currentDate_start,
         firstDate: DateTime(2015),
         lastDate: DateTime(2050)))!;
-    if (pickedDate != null && pickedDate != currentDate_start)
+    if (pickedDate != currentDate_start)
       setState(() {
         currentDate_start =
             pickedDate; // change current state value to picked value
@@ -278,7 +277,7 @@ print(CustomerHome.customerToken.toString());
       key: scaffoldKey,
 
       appBar: AppBar(
-        backwardsCompatibility: false,
+       
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -353,7 +352,7 @@ print(CustomerHome.customerToken.toString());
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: SingleChildScrollView(
@@ -407,7 +406,6 @@ print(CustomerHome.customerToken.toString());
                                 value: selectItemForComplainType,
                                 onChanged: (String? itemValue) {
                                   setState(() {
-                                    _isVisible = true;
                                     selectItemForComplainType = itemValue;
 
                                     //  itemId =  list['itemid'].toString();
@@ -770,7 +768,7 @@ print(CustomerHome.customerToken.toString());
                             if (date == "") {
                               print("null");
 
-                              scaffoldKey.currentState!.showSnackBar(
+                             ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text("Date is required")));
                             } else {
                               //  Navigator.of(context, rootNavigator: true)
@@ -825,14 +823,14 @@ print(CustomerHome.customerToken.toString());
                                 }
                               }
                                catch (e) {
-                                scaffoldKey.currentState!.showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(msg.toString())));
                               }
                             }
 
                             _formkey.currentState!.save();
                           } else {
-                            scaffoldKey.currentState!.showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content:
                                     Text("Please Enter Essential Fields")));
                           }

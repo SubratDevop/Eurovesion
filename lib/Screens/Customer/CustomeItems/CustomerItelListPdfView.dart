@@ -2,11 +2,9 @@
 import 'package:eurovision/Screens/Customer/CustomeItems/CustomerItems.dart';
 import 'package:eurovision/Screens/Customer/SideNavigationDrawer/CustomerDrawer/CustomerDrawer.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
-import 'package:eurovision/Screens/Engineer/SideNavigationDrawer/EngineerDrawer/EngineerDrawer.dart';
 import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 class CustomerItelListPdfView extends StatefulWidget {
   final String pdfUrl;
@@ -45,7 +43,7 @@ class _CustomerItelListPdfViewState extends State<CustomerItelListPdfView> {
         home: Scaffold(
           backgroundColor: themWhiteColor,
           appBar: AppBar(
-            backwardsCompatibility: false,
+             
             systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: themBlueColor,
                 statusBarBrightness: Brightness.light,
@@ -194,7 +192,7 @@ class _CustomerItelListPdfViewState extends State<CustomerItelListPdfView> {
 //     return Scaffold(
 //       backgroundColor: themWhiteColor,
 //       appBar: AppBar(
-//         backwardsCompatibility: false,
+//          
 //         systemOverlayStyle: SystemUiOverlayStyle(
 //             statusBarColor: themBlueColor,
 //             statusBarBrightness: Brightness.light,

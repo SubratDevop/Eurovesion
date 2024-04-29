@@ -113,7 +113,7 @@ class _CustomerTotalComplainScreenState extends State<CustomerTotalComplainScree
 
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -159,7 +159,7 @@ class _CustomerTotalComplainScreenState extends State<CustomerTotalComplainScree
       body: 
       NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Column(

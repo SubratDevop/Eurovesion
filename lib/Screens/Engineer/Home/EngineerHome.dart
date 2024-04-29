@@ -214,8 +214,10 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                   color: Colors.black45),
             ),
             actions: <Widget>[
-              FlatButton(
-                color: themBlueColor,
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(themBlueColor)
+                ),
                 child: const Text(
                   'OK',
                   style: TextStyle(
@@ -366,7 +368,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
     return Scaffold(
       backgroundColor: themWhiteColor,
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -429,7 +431,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
 
       // appBar: AppBar(
 
-      //   backwardsCompatibility: false,
+      //    
       //   systemOverlayStyle: SystemUiOverlayStyle(
       //   statusBarColor: themBlueColor,
       //   statusBarBrightness: Brightness.light,

@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Eurovesion',
         theme: ThemeData(
-          accentColor: Colors.red,
+          
+          hintColor: Colors.red, //^ accentColor: Colors.red,
           brightness: Brightness.light,
           primaryColor: Colors.amber,
           primarySwatch: Colors.indigo,

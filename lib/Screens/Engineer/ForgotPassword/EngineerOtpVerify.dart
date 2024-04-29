@@ -344,7 +344,7 @@ class _EngineerOtpVerifyScreenState extends State<EngineerOtpVerifyScreen> {
       backgroundColor: themWhiteColor,
 
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

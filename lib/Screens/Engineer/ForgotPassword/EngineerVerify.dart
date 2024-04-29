@@ -269,7 +269,7 @@ class _EngineerVerifyScreenState extends State<EngineerVerifyScreen> {
       
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -310,7 +310,7 @@ class _EngineerVerifyScreenState extends State<EngineerVerifyScreen> {
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(

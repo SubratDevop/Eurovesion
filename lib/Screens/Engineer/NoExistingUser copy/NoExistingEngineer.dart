@@ -48,7 +48,7 @@ class _NoExistingUserScreenState extends State<NoExistingUserScreen> {
 
       appBar: AppBar(
 
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -86,7 +86,7 @@ class _NoExistingUserScreenState extends State<NoExistingUserScreen> {
 
       body:  NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Container(

@@ -171,7 +171,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
     return Scaffold(
         backgroundColor: themBlueColor,
         appBar: AppBar(
-          backwardsCompatibility: false,
+           
           systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
@@ -208,7 +208,7 @@ class _EngineerProfileScreenState extends State<EngineerProfileScreen> {
             child: EngineerDrawer()),
         body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overscroll) {
-            overscroll.disallowGlow();
+            overscroll.disallowIndicator();
             return false;
           },
           child: SingleChildScrollView(

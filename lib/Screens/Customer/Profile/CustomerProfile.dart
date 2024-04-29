@@ -164,7 +164,7 @@ class _customerProfileScreenState extends State<customerProfileScreen> {
     return Scaffold(
         backgroundColor: themBlueColor,
         appBar: AppBar(
-          backwardsCompatibility: false,
+           
           systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: themBlueColor,
               statusBarBrightness: Brightness.light,
@@ -199,7 +199,7 @@ class _customerProfileScreenState extends State<customerProfileScreen> {
             child: CustomerDrawer()),
         body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overscroll) {
-            overscroll.disallowGlow();
+            overscroll.disallowIndicator();
             return false;
           },
           child: SingleChildScrollView(

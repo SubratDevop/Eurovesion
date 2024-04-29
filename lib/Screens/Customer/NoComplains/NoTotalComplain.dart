@@ -54,7 +54,7 @@ class _NoTotalComplainScreenState extends State<NoTotalComplainScreen> {
 
       body:  NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
 

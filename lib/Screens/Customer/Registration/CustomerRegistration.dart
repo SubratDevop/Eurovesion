@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
 import 'package:eurovision/Model/CustomerModel/CustomerRegistrationModel.dart';
 import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
@@ -10,7 +9,6 @@ import 'package:eurovision/Api/Api.dart';
 import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class RegistrationCustomer extends StatelessWidget {
@@ -69,7 +67,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       _contactNumber,
       _GST,
       _address,
-      _pincode,
       _password,
       _confirmPassword;
 
@@ -184,8 +181,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         });
       }
       if (status == false) {
-        scaffoldKey.currentState!
-            .showSnackBar(SnackBar(content: Text(message.toString())));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message.toString())));
         setState(() {
           showDistrictList = [];
         });
@@ -619,7 +615,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (String? value) {
-          _pincode = value!;
         },
       ));
     }
@@ -737,7 +732,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       backgroundColor: themWhiteColor,
 
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -813,7 +808,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(

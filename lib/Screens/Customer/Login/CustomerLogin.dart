@@ -175,7 +175,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       key: scaffoldKey,
       backgroundColor: themWhiteColor,
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -225,7 +225,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(
@@ -511,7 +511,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                         // print("email"+ CustomerLogin.customermail.toString());
                         //  print("token .............."+ CustomerLogin.token.toString());
 
-                        // scaffoldKey.currentState!.showSnackBar(
+                        // ScaffoldMessenger.of(context).showSnackBar(
                         //   SnackBar(
                         //     content:Row(
                         //       children: [
@@ -556,13 +556,13 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                             backgroundColor: themBlueColor,
                             textColor: Colors.white,
                             fontSize: 16.0);
-                        //scaffoldKey.currentState!.showSnackBar(SnackBar(content:Text("User Dose not Exist".toString())));
+                        //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("User Dose not Exist".toString())));
                         // Navigator.of(context, rootNavigator: true).push(
                         //     MaterialPageRoute(
                         //         builder: (context) => NoExistingCustomer()));
                       }
                     } catch (e) {
-                      scaffoldKey.currentState!.showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Wrong Credentials".toString())));
                     }
                   },

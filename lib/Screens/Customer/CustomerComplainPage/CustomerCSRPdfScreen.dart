@@ -73,7 +73,7 @@ class _CustomerCSRPdfScreenScreenState extends State<CustomerCSRPdfScreenScreen>
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         // automaticallyImplyLeading: true,
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,

@@ -44,13 +44,13 @@ dependencies:
   syncfusion_flutter_signaturepad:
   permission_handler: ^9.2.0
   image_gallery_saver:
-  intl: ^0.17.0
+  intl: 
   video_player: ^2.2.3
   url_launcher: ^6.1.5
   flutter_cached_pdfview: ^0.4.1
-  flutter_inappwebview: 5.4.3+7
   rename: ^2.0.1
   webview_flutter: ^3.0.4
+  device_preview:
   
 
 

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:eurovision/Api/Api.dart';
-import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
 import 'package:eurovision/Model/CustomerModel/CustomerRegistrationModel.dart';
 import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
 import 'package:eurovision/Screens/Engineer/NoInternent/NoInternetEngineerCustomerRegistration.dart';
@@ -11,7 +9,6 @@ import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class EngineerCustomerRegistration extends StatelessWidget {
@@ -192,8 +189,7 @@ class _EngineerCustomerRegistrationScreenState
         });
       }
       if (status == false) {
-        scaffoldKey.currentState!
-            .showSnackBar(SnackBar(content: Text(message.toString())));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message.toString())));
         setState(() {
           showDistrictList = [];
         });
@@ -706,7 +702,7 @@ class _EngineerCustomerRegistrationScreenState
 
     return Scaffold(
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -750,7 +746,7 @@ class _EngineerCustomerRegistrationScreenState
           child: EngineerDrawer()),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: Form(

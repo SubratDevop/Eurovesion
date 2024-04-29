@@ -51,7 +51,7 @@ class _NoCompletedComplainScreenState extends State<NoCompletedComplainScreen> {
 
       body:  NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Container(

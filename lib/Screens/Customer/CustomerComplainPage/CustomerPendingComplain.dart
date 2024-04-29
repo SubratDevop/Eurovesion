@@ -201,7 +201,7 @@ class _CustomerPendingComplainScreenState extends State<CustomerPendingComplainS
 
       appBar: AppBar(
         
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: themBlueColor,
           statusBarBrightness: Brightness.light,
@@ -266,7 +266,7 @@ class _CustomerPendingComplainScreenState extends State<CustomerPendingComplainS
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: SingleChildScrollView(

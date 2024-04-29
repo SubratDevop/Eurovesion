@@ -244,7 +244,7 @@ class _CustomerCompletedComplainScreenState
       backgroundColor: themWhiteColor,
 
       appBar: AppBar(
-        backwardsCompatibility: false,
+         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -329,7 +329,7 @@ class _CustomerCompletedComplainScreenState
 
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         },
         child: SingleChildScrollView(

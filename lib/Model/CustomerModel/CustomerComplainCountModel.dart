@@ -2,6 +2,8 @@
 //
 //     final customerComplainCountModel = customerComplainCountModelFromJson(jsonString);
 
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 
 CustomerComplainCountModel customerComplainCountModelFromJson(String str) => CustomerComplainCountModel.fromJson(json.decode(str));

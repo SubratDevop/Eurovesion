@@ -50,7 +50,7 @@ class _NoPendingComplainScreenState extends State<NoPendingComplainScreen> {
 
       body:  NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
-          overscroll.disallowGlow();
+          overscroll.disallowIndicator();
           return false;
         }, 
         child: Container(
