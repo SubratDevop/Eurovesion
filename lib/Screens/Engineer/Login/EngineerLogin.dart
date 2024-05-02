@@ -9,9 +9,7 @@ import 'package:eurovision/Model/EngineerModel/EngineerLogin.dart';
 import 'package:eurovision/Screens/Customer/Login/CustomerLogin.dart';
 import 'package:eurovision/Screens/Engineer/ForgotPassword/EngineerVerify.dart';
 import 'package:eurovision/Screens/Engineer/Home/EngineerHome.dart';
-import 'package:eurovision/Screens/Engineer/NoExistingUser%20copy/NoExistingEngineer.dart';
 import 'package:eurovision/Screens/Engineer/NoInternent/NoInternetEngineerLogin.dart';
-import 'package:eurovision/Screens/WelCome/WelCome.dart';
 import 'package:eurovision/bloc/EnginerLogin_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,7 +17,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -84,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     print("password  " +
         AesEncryption.encryptAES(_passwordController.text.toString()));
     String engineerLogin_url = engineerLoginApi;
-
+    print(engineerLogin_url.toString());
     final http.Response response = await http.post(
       Uri.parse(engineerLogin_url),
       headers: <String, String>{
@@ -110,6 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
       print("Engineer Body " + response.body);
       var mess = json.decode(response.body)['message'];
       print("message Body " + mess.toString());
+      Fluttertoast.showToast(
+          msg: mess.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: themBlueColor,
+          textColor: Colors.white,
+          fontSize: 16.0);
 
       return EngineerLoginModel.fromJson(json.decode(response.body));
     } else {
@@ -176,7 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: themWhiteColor,
       appBar: AppBar(
-         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,

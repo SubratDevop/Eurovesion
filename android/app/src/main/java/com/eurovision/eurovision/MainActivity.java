@@ -1,4 +1,4 @@
-package com.eurovision.eurovision;
+package com.app.EurovesionSystems;
 
 import io.flutter.embedding.android.FlutterActivity;
 
