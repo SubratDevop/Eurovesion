@@ -7,7 +7,6 @@ import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../Login/EngineerLogin.dart';
@@ -182,21 +181,24 @@ class _EngineerCreateQuotationScreenState
           //8  ${EngineerLogin.EngineerCreateQuotationId.toString()}
           // "token=${EngineerHome.engToken.toString()}&engineerid=${EngineerHome.engId.toString()}")),
         ),
+        // androidOnFormResubmission: (controller, url) {
+        //   debugPrint("Form Submitted");
+        // },
         onLoadStart: (InAppWebViewController controller, Uri? url) {
           setState(() {
-            if (url.toString() == tourSuccessApi) {
-              //! callback Url
-              print("mmmmmmmmmmmmmmmmmmmmmmmmm " + "Url matched");
+            // if (url.toString() == tourSuccessApi) {
+            //   //! callback Url
+            //   print("mmmmmmmmmmmmmmmmmmmmmmmmm " + "Url matched");
 
-              //close the webview
-              //webView.goBack();
+            //   //close the webview
+            //   //webView.goBack();
 
-              //navigate to the desired screen with arguments
-              Timer(
-                  Duration(seconds: 1),
-                  () => Navigator.of(context, rootNavigator: true).push(
-                      MaterialPageRoute(builder: (context) => EngineerHome())));
-            }
+            //   //navigate to the desired screen with arguments
+            //   Timer(
+            //       Duration(seconds: 1),
+            //       () => Navigator.of(context, rootNavigator: true).push(
+            //           MaterialPageRoute(builder: (context) => EngineerHome())));
+            // }
           });
         },
       ),
