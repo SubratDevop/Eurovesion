@@ -6,13 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'Screens/Customer/Login/CustomerLogin.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,18 +26,17 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Eurovesion',
         theme: ThemeData(
-          
           hintColor: Colors.red, //^ accentColor: Colors.red,
           brightness: Brightness.light,
           primaryColor: Colors.amber,
           primarySwatch: Colors.indigo,
         ),
 
-initialRoute: "/",
-       routes: {
-        "/" : (context) => SplashScreen(),
-        "CustomerLogin" : (context)  => CustomerLogin(),
-       },
+        initialRoute: "/",
+        routes: {
+          "/": (context) => SplashScreen(),
+          "CustomerLogin": (context) => CustomerLogin(),
+        },
         // home: SplashScreen(),
       ),
     );

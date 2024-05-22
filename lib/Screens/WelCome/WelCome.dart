@@ -178,7 +178,6 @@ class _WelComeScreenState extends State<WelComeScreen> {
       backgroundColor: themWhiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
             statusBarBrightness: Brightness.light,
@@ -467,7 +466,10 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                     onPressed: () {
                                       navigateCustomer();
                                     },
-                                    child: Text("Customer")),
+                                    child: Text(
+                                      "Customer",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             ),
                             Padding(
@@ -485,7 +487,10 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                     onPressed: () {
                                       navigateEngineer();
                                     },
-                                    child: Text("Engineer")),
+                                    child: Text(
+                                      "Engineer",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             ),
                           ],
@@ -512,8 +517,10 @@ class _WelComeScreenState extends State<WelComeScreen> {
               padding: EdgeInsets.only(left: 1, bottom: 2),
               child: Text(
                 "Buy\nNow",
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold,
-                color: Colors.white),
+                style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               )),
         ),
       ),

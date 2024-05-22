@@ -131,7 +131,8 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   String? gotValue;
   int? noOfAssign;
 
-  Future<EngineerAssignmentModel> showingAssignmentProcess(String selectedDate) async {
+  Future<EngineerAssignmentModel> showingAssignmentProcess(
+      String selectedDate) async {
     print("showingAssignmentProcess called");
     SharedPreferences engPrefs = await SharedPreferences.getInstance();
 
@@ -192,7 +193,6 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         });
       } else {
         // Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>NoCompletedComplain()));
-
       }
       return EngineerAssignmentModel.fromJson(json.decode(response.body));
     } else {
@@ -216,8 +216,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
             actions: <Widget>[
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(themBlueColor)
-                ),
+                    backgroundColor: MaterialStateProperty.all(themBlueColor)),
                 child: const Text(
                   'OK',
                   style: TextStyle(
@@ -368,9 +367,9 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
     return Scaffold(
       backgroundColor: themWhiteColor,
       appBar: AppBar(
-         
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: themBlueColor,
+
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light),
 
@@ -431,7 +430,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
 
       // appBar: AppBar(
 
-      //    
+      //
       //   systemOverlayStyle: SystemUiOverlayStyle(
       //   statusBarColor: themBlueColor,
       //   statusBarBrightness: Brightness.light,
@@ -451,6 +450,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
       // ),
 
       endDrawer: Container(
+        
           width: MediaQuery.of(context).size.width * 0.7,
           child: EngineerDrawer()),
 
@@ -514,7 +514,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                           ),
                         )
                       : RefreshIndicator(
-                        color: themBlueColor,
+                          color: themBlueColor,
                           onRefresh: loadingCsr,
                           child: ListView.builder(
                               itemCount: showAssignmentList.length,

@@ -12,40 +12,31 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../Login/EngineerLogin.dart';
 
-class EngineerTour extends StatelessWidget {
-  const EngineerTour({Key? key}) : super(key: key);
+class EngineerCreateQuotation extends StatelessWidget {
+  const EngineerCreateQuotation({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EngineerTourScreen(),
+      home: EngineerCreateQuotationScreen(),
     );
   }
 }
 
-class EngineerTourScreen extends StatefulWidget {
-  const EngineerTourScreen({Key? key}) : super(key: key);
+class EngineerCreateQuotationScreen extends StatefulWidget {
+  const EngineerCreateQuotationScreen({Key? key}) : super(key: key);
 
   @override
-  State<EngineerTourScreen> createState() => _EngineerTourScreenState();
+  State<EngineerCreateQuotationScreen> createState() =>
+      _EngineerCreateQuotationScreenState();
 }
 
-class _EngineerTourScreenState extends State<EngineerTourScreen> {
+class _EngineerCreateQuotationScreenState
+    extends State<EngineerCreateQuotationScreen> {
   // final flutterWebviewPlugin = new FlutterWebviewPlugin();
   var webUrlBody;
   // String returnUrl =
   //     "https://apanabazar.com/Payment_Success/call_back"; // for web view go back to app
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print("engTour id " + EngineerHome.engId.toString());
-    print("engTour id " + EngineerHome.engineertourId.toString());
-    print("engTour id " + EngineerLogin.engineertourId.toString());
-    print("TourToken " + EngineerHome.engToken.toString());
-    // enginerTourProcess();
-  }
 
   final GlobalKey webViewKey = GlobalKey();
 
@@ -70,7 +61,7 @@ class _EngineerTourScreenState extends State<EngineerTourScreen> {
     //     "http://203.112.143.203/eurovesion/Toursuccess/index"; // 111.93.167.34 , eurovision
     // String callBackUrl = "http://111.93.167.34/eurovision/Toursuccess/index";
 
-    String title, url;
+    String url;
     bool isLoading = true;
     final _key = UniqueKey();
 
@@ -112,18 +103,13 @@ class _EngineerTourScreenState extends State<EngineerTourScreen> {
             width: MediaQuery.of(context).size.width,
             color: themBlueColor,
             child: Center(
-              child: FittedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    "Tour",
-                    style: TextStyle(
-                        fontFamily: 'AkayaKanadaka',
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: themWhiteColor),
-                  ),
-                ),
+              child: Text(
+                "Create Quotation",
+                style: TextStyle(
+                    fontFamily: 'AkayaKanadaka',
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    color: themWhiteColor),
               ),
             ),
           ),
@@ -189,11 +175,11 @@ class _EngineerTourScreenState extends State<EngineerTourScreen> {
           // url: Uri.parse(
           //     "http://111.93.167.34/eurovision/Api/start_tour_api"), //111.93.167.34  eurovision
 
-          url: Uri.parse(engineerStratTourApi), //111.93.167.34  eurovision
+          url: Uri.parse(enginerCreateQuoteApi), //111.93.167.34  eurovision
           method: 'POST',
           body: Uint8List.fromList(utf8.encode(
               "token=${EngineerHome.engToken.toString()}&engineerid=${EngineerHome.engineertourId.toString()}")),
-          //8  ${EngineerLogin.engineertourId.toString()}
+          //8  ${EngineerLogin.EngineerCreateQuotationId.toString()}
           // "token=${EngineerHome.engToken.toString()}&engineerid=${EngineerHome.engId.toString()}")),
         ),
         onLoadStart: (InAppWebViewController controller, Uri? url) {

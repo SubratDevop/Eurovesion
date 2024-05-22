@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:eurovision/Screens/Engineer/CreateQuotation/engineerCreateQuotation.dart';
 import 'package:eurovision/Screens/Engineer/CustomerServiceReport/CustomerServiceReportList.dart';
 import 'package:eurovision/Screens/Engineer/CustomerServiceReport/EditCustomerServiceReport.dart';
 import 'package:eurovision/Screens/Engineer/EngineerCustomerRegistration/EngineerCustomerRegistration.dart';
@@ -62,6 +63,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       child: Container(
         color: Colors.white,
         child: Drawer(
+          backgroundColor: Colors.white,
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text("Hi ! "),
@@ -127,8 +129,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               onTap: () {
                 Navigator.of(context, rootNavigator: true).push(
                     MaterialPageRoute(
-                        builder: (context) =>
-                            EngineerCustomerRegistration()));
+                        builder: (context) => EngineerCustomerRegistration()));
               },
             ),
             ListTile(
@@ -147,8 +148,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               onTap: () {
                 Navigator.of(context, rootNavigator: true).push(
                     MaterialPageRoute(
-                        builder: (context) =>
-                            CustomerServiceReportList()));
+                        builder: (context) => CustomerServiceReportList()));
               },
             ),
             ListTile(
@@ -166,8 +166,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       fontSize: 15)),
               onTap: () {
                 Navigator.of(context, rootNavigator: true).push(
-                    MaterialPageRoute(
-                        builder: (context) => EngineerTour()));
+                    MaterialPageRoute(builder: (context) => EngineerTour()));
               },
             ),
             ListTile(
@@ -177,21 +176,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 color: Colors.black54,
                 size: 25,
               ),
-              
-              
+
               // Image.asset(
               //   "assets/images/tourList.png",
               //   height: 20,
               //   width: 20,
               //   color: Colors.black54,
               // )
-            
+
               // Icon(
               //   Icons.liquor_outlined,
               //   color: Colors.black54,
               //   size: 25,
               // )
-              
+
               title: Text('Tour List',
                   style: TextStyle(
                       color: Colors.black54,
@@ -202,6 +200,39 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Navigator.of(context, rootNavigator: true).push(
                     MaterialPageRoute(
                         builder: (context) => EngineerTourList()));
+              },
+            ),
+            ListTile(
+              focusColor: themWhiteColor,
+              leading: Icon(
+                Icons.tour,
+                color: Colors.black54,
+                size: 25,
+              ),
+
+              // Image.asset(
+              //   "assets/images/tourList.png",
+              //   height: 20,
+              //   width: 20,
+              //   color: Colors.black54,
+              // )
+
+              // Icon(
+              //   Icons.liquor_outlined,
+              //   color: Colors.black54,
+              //   size: 25,
+              // )
+
+              title: Text('Create Quotation',
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontFamily: 'RobotoMono',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15)),
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(
+                        builder: (context) => EngineerCreateQuotation()));
               },
             ),
 
@@ -238,9 +269,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 SharedPreferences engPrefs =
                     await SharedPreferences.getInstance();
                 engPrefs.clear();
-                
-                Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>EngineerLogin()));
 
+                Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(builder: (context) => EngineerLogin()));
               },
             ),
 

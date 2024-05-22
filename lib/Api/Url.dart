@@ -3,13 +3,12 @@
 // String ipaddress="111.93.167.34";  // Testing eurovision
 
 //^ updated TEst API url
-//  http://103.212.120.205/ 
+//  http://103.212.120.205/
 
-
- String port="";
+String port = "";
 
 // String ipaddress="111.93.167.34";  // eurovision
 
-  String ipaddress="103.212.120.205";  //euro_testing  (testing)
+String ipaddress = "103.212.120.205"; //euro_testing  (testing)
 
-  // String ipaddress="103.212.120.205";  //eurovesion  (Live)
+// String ipaddress="103.212.120.205";  //eurovesion  (Live)

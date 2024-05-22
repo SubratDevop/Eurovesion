@@ -6,58 +6,61 @@
 
 import 'dart:convert';
 
-EngineerAssignmentModel engineerAssignmentModelFromJson(String str) => EngineerAssignmentModel.fromJson(json.decode(str));
+EngineerAssignmentModel engineerAssignmentModelFromJson(String str) =>
+    EngineerAssignmentModel.fromJson(json.decode(str));
 
-String engineerAssignmentModelToJson(EngineerAssignmentModel data) => json.encode(data.toJson());
+String engineerAssignmentModelToJson(EngineerAssignmentModel data) =>
+    json.encode(data.toJson());
 
 class EngineerAssignmentModel {
-    EngineerAssignmentModel({
-      required  this.status,
-      required  this.totalAssignCount,
-      required  this.data,
-    });
+  EngineerAssignmentModel({
+    required this.status,
+    required this.totalAssignCount,
+    required this.data,
+  });
 
-    bool status;
-    int totalAssignCount;
-    List<Datum> data;
+  bool status;
+  int totalAssignCount;
+  List<Datum> data;
 
-    factory EngineerAssignmentModel.fromJson(Map<String, dynamic> json) => EngineerAssignmentModel(
+  factory EngineerAssignmentModel.fromJson(Map<String, dynamic> json) =>
+      EngineerAssignmentModel(
         status: json["status"],
         totalAssignCount: json["total_assign_count"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "total_assign_count": totalAssignCount,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Datum {
-    Datum({
-      required  this.id,
-      required  this.engineerid,
-      required  this.complainid,
-      required  this.complaindate,
-      required  this.assignedfordate,
-      required  this.isactive,
-      required  this.complaintnumber,
-      required  this.complainttext,
-      required  this.csrStatus,
-    });
+  Datum({
+    required this.id,
+    required this.engineerid,
+    required this.complainid,
+    required this.complaindate,
+    required this.assignedfordate,
+    required this.isactive,
+    required this.complaintnumber,
+    required this.complainttext,
+    required this.csrStatus,
+  });
 
-    String id;
-    String engineerid;
-    String complainid;
-    String complaindate;
-    String assignedfordate;
-    String isactive;
-    String complaintnumber;
-    String complainttext;
-    bool csrStatus;
+  String id;
+  String engineerid;
+  String complainid;
+  String complaindate;
+  String assignedfordate;
+  String isactive;
+  String complaintnumber;
+  String complainttext;
+  bool csrStatus;
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         engineerid: json["engineerid"],
         complainid: json["complainid"],
@@ -67,9 +70,9 @@ class Datum {
         complaintnumber: json["complaintnumber"],
         complainttext: json["complainttext"],
         csrStatus: json["csr_status"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "engineerid": engineerid,
         "complainid": complainid,
@@ -79,7 +82,7 @@ class Datum {
         "complaintnumber": complaintnumber,
         "complainttext": complainttext,
         "csr_status": csrStatus,
-    };
+      };
 }
 
 
