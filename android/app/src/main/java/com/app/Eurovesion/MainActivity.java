@@ -1,4 +1,4 @@
-package com.app.EurovesionSystems;
+package com.app.Eurovesion;
 
 import io.flutter.embedding.android.FlutterActivity;
 

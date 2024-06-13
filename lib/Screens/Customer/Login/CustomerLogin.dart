@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:developer';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:eurovision/AES256encryption/Encrypted.dart';
 import 'package:eurovision/Api/Api.dart';
@@ -7,7 +8,6 @@ import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
 import 'package:eurovision/Model/CustomerModel/CustomerLoginModel.dart';
 import 'package:eurovision/Screens/Customer/ForgotPassword/CustomerVerify.dart';
 import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
-import 'package:eurovision/Screens/Customer/NoExistingCustomer/NoExistingCustomer.dart';
 import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerLogin.dart';
 import 'package:eurovision/Screens/Customer/Registration/CustomerRegistration.dart';
 import 'package:eurovision/Screens/Engineer/Login/EngineerLogin.dart';
@@ -111,6 +111,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
     );
 
     if (response.statusCode == 200) {
+      log(response.body.toString());
       return CustomerLoginModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to create album.');
@@ -563,7 +564,7 @@ class _CustomerLoginScreenState extends State<CustomerLoginScreen> {
                       }
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Wrong Credentials".toString())));
+                          content: Text("Wrong Credentials".toString()),backgroundColor: Colors.red,));
                     }
                   },
             child: Container(
