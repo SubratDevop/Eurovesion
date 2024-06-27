@@ -502,28 +502,29 @@ class _WelComeScreenState extends State<WelComeScreen> {
               )),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 40, right: 5),
-        child: FloatingActionButton(
-          backgroundColor: themBlueColor,
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WebviewPage(),
-                ));
-          },
-          child: Container(
-              padding: EdgeInsets.only(left: 1, bottom: 2),
-              child: Text(
-                "Buy\nNow",
-                style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              )),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 40, right: 5),
+      //   child: FloatingActionButton(
+      //     backgroundColor: themBlueColor,
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => WebviewPage(),
+      //           ));
+      //     },
+      //     child: Container(
+      //         padding: EdgeInsets.only(left: 1, bottom: 2),
+      //         child: Text(
+      //           "Buy\nNow",
+      //           style: TextStyle(
+      //               fontSize: 11,
+      //               fontWeight: FontWeight.bold,
+      //               color: Colors.white),
+      //         )),
+      //   ),
+      // ),
+  
     );
   }
 }
