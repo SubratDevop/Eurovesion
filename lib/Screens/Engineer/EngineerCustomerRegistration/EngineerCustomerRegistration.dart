@@ -1294,8 +1294,7 @@ class _EngineerCustomerRegistrationScreenState
                                   ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  primary: themBlueColor,
-                                  onPrimary: Colors.white,
+                                  backgroundColor: themBlueColor,
                                   shadowColor: Colors.white60,
                                   shape: const BeveledRectangleBorder(
                                       borderRadius:

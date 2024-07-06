@@ -85,8 +85,9 @@ class _NoPendingComplainScreenState extends State<NoPendingComplainScreen> {
                           icon: Icon(Icons.arrow_back),
                           label: FittedBox(child: Text('Back', style: TextStyle(color: Colors.white,fontSize: 16),)),
                           style: ElevatedButton.styleFrom(
-                            primary: themBlueColor,
-                            onPrimary: Colors.white,
+                            // primary: themBlueColor,
+                            // onPrimary: Colors.white,
+                            backgroundColor: themBlueColor,
                             shadowColor: themBlueColor,
                             shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
                             elevation: 10,

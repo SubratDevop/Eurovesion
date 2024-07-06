@@ -586,7 +586,7 @@ class _CustomerServiceReportScreenState
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          primary: Colors.white,
+                         
                           side: BorderSide(
                               color: Colors.green, width: 1), 
                         ),
@@ -649,7 +649,7 @@ class _CustomerServiceReportScreenState
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          primary: Colors.white,
+                       
                           side: BorderSide(color: Colors.red, width: 1),
                         ),
                         child: Text('Clear',
@@ -663,7 +663,6 @@ class _CustomerServiceReportScreenState
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          primary: Colors.white,
                           side: BorderSide(
                               color: themBlueColor, width: 1), //<-- SEE HERE
                         ),

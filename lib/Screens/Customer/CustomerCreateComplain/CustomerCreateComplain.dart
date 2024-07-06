@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:eurovision/Api/Api.dart';
-import 'package:eurovision/CustomShape/CustomAppBarShape/Customshape.dart';
 import 'package:eurovision/Model/CustomerModel/CustomerComplainModel.dart';
 import 'package:eurovision/Screens/Customer/CustomerComplainPage/CustomerTotalComplain.dart';
 import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
@@ -429,8 +428,10 @@ class _CustomerComplainScreenState extends State<CustomerComplainScreen> {
                                     color: Colors.white, fontSize: 16),
                               )),
                               style: ElevatedButton.styleFrom(
-                                primary: themBlueColor,
-                                onPrimary: Colors.white,
+                                // primary: themBlueColor,
+                                // onPrimary: Colors.white,
+                                backgroundColor: themBlueColor,
+                                
                                 shadowColor: themBlueColor,
                                 shape: const BeveledRectangleBorder(
                                     borderRadius:

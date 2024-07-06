@@ -458,7 +458,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                 height: 50,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: themBlueColor,
+                                        backgroundColor: themBlueColor,
                                         // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                                         textStyle: TextStyle(
                                             fontSize: 20,
@@ -479,7 +479,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                 width: width * 0.49,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: themBlueColor,
+                                        backgroundColor: themBlueColor,
                                         // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                                         textStyle: TextStyle(
                                             fontSize: 20,

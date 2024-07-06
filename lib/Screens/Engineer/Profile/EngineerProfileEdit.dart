@@ -546,8 +546,7 @@ class _EngineerProfileEditScreenState extends State<EngineerProfileEditScreen> {
                               icon: Icon(Icons.app_registration),
                               label: Text("Save Profile",style: TextStyle(fontFamily: 'AkayaKanadaka',fontSize: 20,fontWeight: FontWeight.w700,color: themWhiteColor),),
                               style: ElevatedButton.styleFrom(
-                                primary: themBlueColor,
-                                onPrimary: Colors.white,
+                                backgroundColor: themBlueColor,
                                 shadowColor: Colors.white60,
                                 shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
                                 elevation: 10,

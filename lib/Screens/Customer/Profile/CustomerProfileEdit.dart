@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:eurovision/Model/CustomerModel/CustomerProfileEditModel.dart';
 import 'package:eurovision/Screens/Customer/Home/CustomerHome.dart';
 import 'package:eurovision/Screens/Customer/NoInternent/NoInternetCustomerRegistration.dart';
@@ -11,7 +10,6 @@ import 'package:eurovision/Api/Api.dart';
 import 'package:eurovision/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -581,8 +579,7 @@ class _CustomerProfileEditScreenState extends State<CustomerProfileEditScreen> {
                                       color: themWhiteColor),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  primary: themBlueColor,
-                                  onPrimary: Colors.white,
+                              backgroundColor: themBlueColor,
                                   shadowColor: Colors.white60,
                                   shape: const BeveledRectangleBorder(
                                       borderRadius:
